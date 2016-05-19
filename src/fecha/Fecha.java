@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class Fecha implements Serializable{
 	private static final long serialVersionUID = 1L;
 
-	private GregorianCalendar calendar;
+	public GregorianCalendar calendar;
 	
 	private static final Locale locale = new Locale("es", "ES");
 	
@@ -22,31 +22,31 @@ public class Fecha implements Serializable{
 		calendar=new GregorianCalendar(locale);
 	}
 	/**
-	 * Constructor que recibe como parÃ¡metros el dÃ­a, el mes y el aÃ±o
+	 * Constructor que recibe como parámetros el día, el mes y el año
 	 * @throws FechaNoValidaException 
 	 */
 	public Fecha(int dia,int mes,int anno) throws FechaNoValidaException{
 		if(!esValida(dia,mes-1,anno))
-			throw new FechaNoValidaException("Fecha no vÃ¡lida.");
+			throw new FechaNoValidaException("Fecha no válida.");
 	}
 	
 	/**
-	 * Constructor que recibe como parÃ¡metro la fecha (como cadena)
+	 * Constructor que recibe como parámetro la fecha (como cadena)
 	 * @throws FormatoNoValidoException 
 	 * @throws NumberFormatException 
 	 * @throws FechaNoValidaException 
 	 */
 	public Fecha(String cadena) throws FormatoNoValidoException, NumberFormatException, FechaNoValidaException{
 		if(!esValidoFormato(cadena))
-			throw new FormatoNoValidoException("Formato no vÃ¡lido.");
+			throw new FormatoNoValidoException("Formato no válido.");
 		if(!esValida(cadena))
-			throw new FechaNoValidaException("Fecha no vÃ¡lida.");
+			throw new FechaNoValidaException("Fecha no válida.");
 	}
 
 	/**
-	 * Comprueba si el formato de la fecha es vÃ¡lido
+	 * Comprueba si el formato de la fecha es válido
 	 * @param cadena
-	 * @return true si la cadena cumple el patrÃ³n
+	 * @return true si la cadena cumple el patrón
 	 */
 	private boolean esValidoFormato(String cadena){
 		Pattern pattern=Pattern.compile("(0?[1-9]|[12][0-9]|3[01])[- /](0?[1-9]|1[012])[- /](19|20)\\d\\d");
@@ -54,7 +54,7 @@ public class Fecha implements Serializable{
 	}
 	
 	/**
-	 * A partir de una cadena obtenemos un array con 3 subcadenas, el dÃ­a el mes y el aÃ±o
+	 * A partir de una cadena obtenemos un array con 3 subcadenas, el día el mes y el año
 	 * @param cadena
 	 * @return array de cadenas
 	 */
@@ -63,7 +63,7 @@ public class Fecha implements Serializable{
 	}
 	
 	/**
-	 * Suma a la fecha los dÃ­as,meses y aÃ±os dados
+	 * Suma a la fecha los días,meses y años dados
 	 * @param dias
 	 * @param meses
 	 * @param annos
@@ -71,7 +71,7 @@ public class Fecha implements Serializable{
 	 */
 	public void sumar(int dias,int meses,int annos) throws SumaNoValidaException{
 		if(dias<0 || meses<0 || annos<0)
-			throw new SumaNoValidaException("Valores de suma no vÃ¡lidos.");
+			throw new SumaNoValidaException("Valores de suma no válidos.");
 		
 		calendar.add(GregorianCalendar.DAY_OF_MONTH, dias);
 		calendar.add(GregorianCalendar.MONTH, meses);
@@ -79,11 +79,11 @@ public class Fecha implements Serializable{
 	}
 	
 	/**
-	 * Comprueba si la fecha dada a travÃ©s de enteros (dÃ­a, mes y aÃ±o) es vÃ¡lida
+	 * Comprueba si la fecha dada a través de enteros (día, mes y año) es válida
 	 * @param dia
 	 * @param mes
 	 * @param anno
-	 * @return true si es vÃ¡lida y false si no lo es
+	 * @return true si es válida y false si no lo es
 	 */
 	private boolean esValida(int dia,int mes,int anno){
 		try {
@@ -95,9 +95,9 @@ public class Fecha implements Serializable{
 	}
 	
 	/**
-	 * Comprueba si la fecha dada a travÃ©s de una cadena es vÃ¡lida
+	 * Comprueba si la fecha dada a través de una cadena es válida
 	 * @param cadena
-	 * @return true si es vÃ¡lida y false si no lo es
+	 * @return true si es válida y false si no lo es
 	 */
 	private boolean esValida(String cadena){
 		String[] array=obtenerArrayDiaMesAnno(cadena);
@@ -111,9 +111,9 @@ public class Fecha implements Serializable{
 	}
 	
 	/**
-	 * Calcula la diferencia en dÃ­as entre dos fechas
+	 * Calcula la diferencia en días entre dos fechas
 	 * @param fecha
-	 * @return diferencia en dÃ­as
+	 * @return diferencia en días
 	 */
 	public long calcularDiasTranscurridos(Fecha fecha){
 		LocalDate fecha1=LocalDate.of(fecha.calendar.get(GregorianCalendar.YEAR),
@@ -128,9 +128,9 @@ public class Fecha implements Serializable{
 	}
 	
 	/**
-	 * Calcula la diferencia en aÃ±os entre dos fechas 
+	 * Calcula la diferencia en años entre dos fechas 
 	 * @param fecha
-	 * @return diferencia en aÃ±os
+	 * @return diferencia en años
 	 */
 	public long calcularAnnosTranscurridos(Fecha fecha){
 		LocalDate fecha1=LocalDate.of(fecha.calendar.get(GregorianCalendar.YEAR),
@@ -146,7 +146,7 @@ public class Fecha implements Serializable{
 	
 	/**
 	 * Comprueba si la fecha de nacimiento y nos indica si la persona es mayor de edad
-	 * @return true si tiene 18 o mÃ¡s y false si tiene menos
+	 * @return true si tiene 18 o más y false si tiene menos
 	 */
 	public boolean esMayorDeEdad(){
 		LocalDate fecha=LocalDate.of(calendar.get(GregorianCalendar.YEAR),
@@ -170,8 +170,8 @@ public class Fecha implements Serializable{
 	}
 	
 	/**
-	 * Devuelve el dÃ­a de la semana de una fecha en castellano
-	 * @return cadena con el dÃ­a de la semana
+	 * Devuelve el día de la semana de una fecha en castellano
+	 * @return cadena con el día de la semana
 	 */
 	public String getDiaDeLaSemana(){
 		return calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, locale);
@@ -200,7 +200,7 @@ public class Fecha implements Serializable{
 	}
 	
 	/**
-	 * Crea una nueva fecha siempre que Ã©sta sea vÃ¡lida
+	 * Crea una nueva fecha siempre que ésta sea válida
 	 * @param dia
 	 * @param mes
 	 * @param anno
@@ -213,7 +213,7 @@ public class Fecha implements Serializable{
 			calendar.setLenient(false);
 			calendar.getTime();
 		} catch (Exception e) {
-			throw new FechaNoValidaException("Fecha no vÃ¡lida.");
+			throw new FechaNoValidaException("Fecha no válida.");
 		}
 	}
 	
@@ -223,7 +223,7 @@ public class Fecha implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Fecha: " + calendar.get(GregorianCalendar.DAY_OF_MONTH) + 
+		return calendar.get(GregorianCalendar.DAY_OF_MONTH) + 
 				"/" + 
 				(calendar.get(GregorianCalendar.MONTH)+1) + 
 				"/" +
