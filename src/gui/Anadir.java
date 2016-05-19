@@ -1,11 +1,17 @@
 package gui;
 
+import funcionalidad.Componente;
+import funcionalidad.Movil;
+import funcionalidad.Producto;
+import funcionalidad.Tablet;
 import funcionalidad.Tienda;
 import funcionalidad.enumeraciones.*;
 import funcionalidad.excepciones.*;
 
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -18,7 +24,7 @@ import java.awt.event.FocusEvent;
  */
 public class Anadir extends DialogoPadre {
 	private static final long serialVersionUID = 1L;
-
+	Producto producto;
 	/**
 	 * Constructor que recibe el ArrayList tienda
 	 * @param tienda ArrayList de productos
@@ -30,12 +36,14 @@ public class Anadir extends DialogoPadre {
 		
 		enviar.setText("Añadir");
 		salir.setText("Salir");
+		lblFecha.setVisible(false);
+		fecha.setVisible(false);
 		
 		identificador.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				try {
-					if(tienda.getAlmacen().contains(tienda.get(identificador.getText().toUpperCase()))){
+					if(tienda.getAlmacen().contains(tienda.getProductoPorId(identificador.getText().toUpperCase()))){
 						identificador.setText("");
 						JOptionPane.showMessageDialog(contentPanel,
 								"Ya existe esa Id en la lista\n"
@@ -51,59 +59,65 @@ public class Anadir extends DialogoPadre {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					if(getTipo()==TipoItem.COMPONENTE){
-						tienda.anadir(identificador.getText(),
-						nombre.getText(),
-						descripcion.getText(),
-						Float.parseFloat(precio.getText()),
-						Integer.parseInt(unidades.getText()),
-						(TipoComponente) comboBoxMarcaOComponente.getSelectedItem(),
-						fabricante.getText());
-						tienda.setModificado(true);
+						producto=new Componente(identificador.getText(),
+								nombre.getText(),
+								descripcion.getText(),
+								Float.parseFloat(precio.getText()),
+								Integer.parseInt(unidades.getText()),
+								(TipoComponente) comboBoxMarcaOComponente.getSelectedItem(),
+								fabricante.getText());
 						JOptionPane.showMessageDialog(contentPanel, "Componente añadido con éxito");
-						clear();
 					}
 					else if(getTipo()==TipoItem.MOVIL){
-						tienda.anadir(identificador.getText(),
-						nombre.getText(),
-						descripcion.getText(),
-						Float.parseFloat(precio.getText()),
-						Integer.parseInt(unidades.getText()),
-						(MarcaMovil)comboBoxMarcaOComponente.getSelectedItem(),
-						(ModeloMovil)comboBoxModelo.getSelectedItem(),
-						(SistemaOperativo)comboBoxSistemaOperativo.getSelectedItem(),
-						Integer.parseInt(camaraMovilOMemoriaTablet.getText()),
-						Integer.parseInt(memoriaOPantallaTablet.getText()),
-						procesador.getText());
-						tienda.setModificado(true);
+						producto=new Movil(identificador.getText(),
+								nombre.getText(),
+								descripcion.getText(),
+								Float.parseFloat(precio.getText()),
+								Integer.parseInt(unidades.getText()),
+								(MarcaMovil)comboBoxMarcaOComponente.getSelectedItem(),
+								(ModeloMovil)comboBoxModelo.getSelectedItem(),
+								(SistemaOperativo)comboBoxSistemaOperativo.getSelectedItem(),
+								Integer.parseInt(camaraMovilOMemoriaTablet.getText()),
+								Integer.parseInt(memoriaOPantallaTablet.getText()),
+								procesador.getText());
 						JOptionPane.showMessageDialog(contentPanel, "Móvil añadido con éxito");
-						clear();
 					}
 					else if(getTipo()==TipoItem.TABLET){
-						tienda.anadir(identificador.getText(),
-						nombre.getText(),
-						descripcion.getText(),
-						Float.parseFloat(precio.getText()),
-						Integer.parseInt(unidades.getText()),
-						(MarcaTablet)comboBoxMarcaOComponente.getSelectedItem(),
-						(ModeloTablet)comboBoxModelo.getSelectedItem(),
-						procesadorTablet.getText(),
-						Integer.parseInt(camaraMovilOMemoriaTablet.getText()),
-						Integer.parseInt(memoriaOPantallaTablet.getText()));
-						tienda.setModificado(true);
+						producto=new Tablet(identificador.getText(),
+								nombre.getText(),
+								descripcion.getText(),
+								Float.parseFloat(precio.getText()),
+								Integer.parseInt(unidades.getText()),
+								(MarcaTablet)comboBoxMarcaOComponente.getSelectedItem(),
+								(ModeloTablet)comboBoxModelo.getSelectedItem(),
+								procesadorTablet.getText(),
+								Integer.parseInt(camaraMovilOMemoriaTablet.getText()),
+								Integer.parseInt(memoriaOPantallaTablet.getText()));
 						JOptionPane.showMessageDialog(contentPanel, "Tablet añadida con éxito");
-						clear();
 					}
 					else{
 						JOptionPane.showMessageDialog(contentPanel,
 							"Debe seleccionar un producto.", "Error",
 							JOptionPane.ERROR_MESSAGE);
+						return;
 					}
-
-				} catch (IdNoValidaException | NumeroUnidadesNoValidoException
-						| PrecioNoValidoException | ProductoYaExisteException e1) {
+					tienda.anadirProducto(producto);
+					tienda.setModificado(true);
+					identificador.setForeground(Color.BLACK);
+					clear();
+				} catch (IdNoValidaException e1) {
+					JOptionPane.showMessageDialog(contentPanel,
+							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					identificador.setForeground(Color.RED);
+				} catch (NumeroUnidadesNoValidoException
+						| PrecioNoValidoException | ProductoYaExisteException |
+						NombreNoValidoException | DescripcionNoValidaException |
+						TipoDeComponenteNoValidoException | MarcaMovilNoValidaException | 
+						ModeloMovilNoValidoException | SistemaOperativoNoValidoException | 
+						MarcaTabletNoValidaException | ModeloTabletNoValidoException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
 							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);	
-				} catch(NumberFormatException e2) {
+				} catch(NumberFormatException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
 							"Unidades, cámara o memoria deben de ser enteros\n"
 							+ "Precio y pantalla deben de ser decimales",

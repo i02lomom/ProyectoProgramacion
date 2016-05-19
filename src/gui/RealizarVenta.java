@@ -2,9 +2,11 @@ package gui;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.GregorianCalendar;
 
 import javax.swing.JOptionPane;
 
+import fecha.Fecha;
 import funcionalidad.Producto;
 import funcionalidad.Tienda;
 import funcionalidad.excepciones.NumeroUnidadesNoValidoException;
@@ -25,12 +27,14 @@ public class RealizarVenta extends DialogoPadre {
 		salir.setText("Salir");
 		
 		botonesPorDefecto();
+		identificador.setEnabled(true);
+		nombre.setEnabled(false);
 		
-		nombre.addFocusListener(new FocusAdapter() {
+		identificador.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				try {
-					producto = tienda.getProducto(nombre.getText());
+					producto = tienda.getProductoPorId(identificador.getText().toUpperCase());
 					mostrarProducto(producto);
 					enviar.setEnabled(true);
 				} catch (ProductoNoExisteException e1) {
@@ -59,9 +63,14 @@ public class RealizarVenta extends DialogoPadre {
 						float totalAPagar=(producto.calcularPrecio())*unidadesAVender;
 						producto.setUnidades(Integer.parseInt(unidades.getText()) - unidadesAVender);	
 						tienda.setModificado(true);
+						Fecha fecha=new Fecha();
 						JOptionPane.showMessageDialog(contentPanel, "Vendidas "+unidadesAVender+ " unidades a "
-						+producto.calcularPrecio()+" euros\nEl total de la compra asciende a "+totalAPagar+""
-						+ "\n\n GRACIAS POR SU VISITA");
+								+producto.calcularPrecio()+" euros\nEl total de la compra asciende a "+totalAPagar+"\n"
+								+"Fecha: "+fecha.getDiaDeLaSemana()+" "
+								+fecha.getFecha().get(GregorianCalendar.DAY_OF_MONTH)+" "
+								+"de "+fecha.getMes()+" de "+fecha.getFecha().get(GregorianCalendar.YEAR)
+								+ "\n\n GRACIAS POR SU VISITA");
+						
 						enviar.setEnabled(false);
 						clear();
 					} 

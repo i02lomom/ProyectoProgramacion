@@ -38,7 +38,7 @@ public class Eliminar extends DialogoPadre {
 			@Override
 			public void focusLost(FocusEvent e) {
 				try {
-					Producto producto=tienda.getProducto(nombre.getText());
+					Producto producto=tienda.getProductoPorNombre(nombre.getText());
 					mostrarProducto(producto);
 					enviar.setEnabled(true);
 				} catch (ProductoNoExisteException e1) {

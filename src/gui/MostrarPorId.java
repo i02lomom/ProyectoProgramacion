@@ -31,12 +31,14 @@ public class MostrarPorId extends DialogoPadre {
 		salir.setText("Salir");
 		
 		botonesPorDefecto();
+		identificador.setEnabled(true);
+		nombre.setEnabled(false);
 		
 		identificador.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				try {
-					Producto producto=tienda.get(identificador.getText().toUpperCase());
+					Producto producto=tienda.getProductoPorId(identificador.getText().toUpperCase());
 					mostrarProducto(producto);
 				} catch (ProductoNoExisteException e1) {
 					JOptionPane.showMessageDialog(contentPanel,

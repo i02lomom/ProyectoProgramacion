@@ -24,7 +24,7 @@ public class MostrarPorNombre extends DialogoPadre {
 	 */
 	public MostrarPorNombre(Tienda tienda){
 		super();
-		setTitle("Buscar por Id");
+		setTitle("Buscar por Nombre");
 		setBounds(100, 100, 455, 344);
 		
 		enviar.setVisible(false);
@@ -36,7 +36,7 @@ public class MostrarPorNombre extends DialogoPadre {
 			@Override
 			public void focusLost(FocusEvent e) {
 				try {
-					Producto producto=tienda.getProducto(nombre.getText());
+					Producto producto=tienda.getProductoPorNombre(nombre.getText());
 					mostrarProducto(producto);
 				} catch (ProductoNoExisteException e1) {
 					JOptionPane.showMessageDialog(contentPanel,

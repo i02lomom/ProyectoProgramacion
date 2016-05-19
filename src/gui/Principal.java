@@ -17,6 +17,7 @@ import funcionalidad.Movil;
 import funcionalidad.Producto;
 import funcionalidad.Tablet;
 import funcionalidad.Tienda;
+import funcionalidad.excepciones.ProductoYaExisteException;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -83,7 +84,7 @@ public class Principal {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 455, 344);
 		frame.setResizable(false);
-		frame.setTitle("Sin título");
+		actualizarTitulo("Tienda: Sin título");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fileChooser.setFileFilter(filter);
 		
@@ -106,20 +107,7 @@ public class Principal {
 		JMenuItem mntmAbrir = new JMenuItem("Abrir...");
 		mntmAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comprobarCambios();
-				returnVal = fileChooser.showOpenDialog(frame);
-				if (returnVal == JFileChooser.APPROVE_OPTION){
-					file=fileChooser.getSelectedFile();
-					if(file.exists()&&file!=null){
-						abrir(file);
-						frame.setTitle(file.getName());
-					}
-					else
-						JOptionPane.showMessageDialog(frame,
-							    "No existe el fichero",
-							    "Fichero no encontrado",
-							    JOptionPane.PLAIN_MESSAGE);
-				}
+				abrirFichero();
 			}
 		});
 		mntmAbrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
@@ -238,6 +226,7 @@ public class Principal {
 		mntmMostrarComponentes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mostrarComponentes();
+				
 			}
 		});
 		mntmMostrarComponentes.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
@@ -301,6 +290,10 @@ public class Principal {
 		lblImagen.setIcon(new ImageIcon(Principal.class.getResource("/imagenes/Tienda.png")));
 		lblImagen.setBounds(0, 0, 449, 294);
 		frame.getContentPane().add(lblImagen);
+	}
+	
+	private void actualizarTitulo(String titulo){
+		frame.setTitle(titulo);
 	}
 	
 	/**
@@ -373,6 +366,7 @@ public class Principal {
 	
 	/**
 	 * Crea una nueva ventana MostrarComponentes y la pone visible
+	 * @throws FabricanteNoValidoException 
 	 */
 	private void mostrarComponentes(){
 		if(!tiendaVacia(tienda)){
@@ -394,7 +388,7 @@ public class Principal {
 	private void mostrarTablets(){
 		if(!tiendaVacia(tienda)){
 			crearArrayTablets(tienda);
-			if(!tiendaComponentes.getAlmacen().isEmpty()){
+			if(!tiendaTablets.getAlmacen().isEmpty()){
 				mostrarTablets=new MostrarTablets(tienda,tiendaTablets);
 				mostrarTablets.setVisible(true);
 			}
@@ -463,7 +457,10 @@ public class Principal {
 	private void crearArrayComponentes(Tienda tienda){
 		for(Producto elemento:tienda.getAlmacen()){
 			if(elemento instanceof Componente)
-				tiendaComponentes.getAlmacen().add(elemento);
+				try {
+					tiendaComponentes.anadirProducto(elemento);
+				} catch (ProductoYaExisteException e) {
+				}
 		}
 	}
 	
@@ -474,7 +471,10 @@ public class Principal {
 	private void crearArrayMoviles(Tienda tienda){
 		for(Producto elemento:tienda.getAlmacen()){
 			if(elemento instanceof Movil)
-				tiendaMoviles.getAlmacen().add(elemento);
+				try {
+					tiendaMoviles.anadirProducto(elemento);
+				} catch (ProductoYaExisteException e) {
+				}
 		}
 	}
 	
@@ -485,7 +485,10 @@ public class Principal {
 	private void crearArrayTablets(Tienda tienda){
 		for(Producto elemento:tienda.getAlmacen()){
 			if(elemento instanceof Tablet)
-				tiendaTablets.getAlmacen().add(elemento);
+				try {
+					tiendaTablets.anadirProducto(elemento);
+				} catch (ProductoYaExisteException e) {
+				}
 		}
 	}
 	
@@ -514,7 +517,7 @@ public class Principal {
 		comprobarCambios();
 		inicializar();  //Creamos una tienda nueva y ponemos modificado a false
 		file=null;	//Ponemos el file a null para indicar que el fichero es nuevo
-		frame.setTitle("Sin título");
+		actualizarTitulo("Tienda: Sin título");
 	}
 
 	/**
@@ -523,6 +526,26 @@ public class Principal {
 	private void inicializar() {
 		tienda.setModificado(false);
 		tienda = new Tienda();
+	}
+	
+	/**
+	 * Abre el fichero seleccionado en el fileChooser
+	 */
+	private void abrirFichero() {
+		comprobarCambios();
+		returnVal = fileChooser.showOpenDialog(frame);
+		if (returnVal == JFileChooser.APPROVE_OPTION){
+			file=fileChooser.getSelectedFile();
+			if(file.exists()&&file!=null)
+				abrir(file);
+			else
+				JOptionPane.showMessageDialog(frame,
+					    "No existe el fichero",
+					    "Fichero no encontrado",
+					    JOptionPane.PLAIN_MESSAGE);
+		}
+		else if(returnVal == JFileChooser.CANCEL_OPTION)
+			return;
 	}
 	
 	/**
@@ -536,6 +559,12 @@ public class Principal {
 			    "Fichero cargado",
 			    JOptionPane.PLAIN_MESSAGE);
 			tienda.setModificado(false);
+			actualizarTitulo("Tienda: "+file.getName());
+		} catch (ClassCastException e) {
+			JOptionPane.showMessageDialog(frame,
+				    "Tipo de fichero no válido",
+				    "Error",
+				    JOptionPane.PLAIN_MESSAGE);
 		} catch (ClassNotFoundException e) {
 			JOptionPane.showMessageDialog(frame,
 			    "Información distinta a la esperada",
@@ -565,7 +594,7 @@ public class Principal {
 					    "Fichero guardado con éxito",
 					    "Fichero guardado",
 					    JOptionPane.PLAIN_MESSAGE);
-				frame.setTitle(file.getName());
+				actualizarTitulo("Tienda: "+file.getName());
 			} catch (IOException e) {
 				JOptionPane.showMessageDialog(frame,
 					"Error al escribir en el fichero",
@@ -599,7 +628,7 @@ public class Principal {
 				    "Fichero guardado con éxito",
 				    "Fichero guardado",
 				    JOptionPane.PLAIN_MESSAGE);
-				frame.setTitle(file.getName());
+				actualizarTitulo("Tienda: "+file.getName());
 			}
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(frame,

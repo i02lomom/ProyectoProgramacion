@@ -12,9 +12,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
- * Clase AcercaDe. Muestra informaciÃ³n acerca del programa.
+ * Clase AcercaDe. Muestra información acerca del programa.
  * 
- * @author Miguel Angel LÃ³pez Moyano
+ * @author Miguel Angel López Moyano
  * @version 1.0
  */
 public class AcercaDe extends JDialog {
@@ -68,4 +68,3 @@ public class AcercaDe extends JDialog {
 		contentPanel.add(btnAceptar);
 	}
 }
-

@@ -46,11 +46,13 @@ public class DialogoPadre extends JDialog implements ChangeListener {
 	protected JTextField procesador;
 	protected JTextField procesadorTablet;
 	protected JTextField fabricante;
+	protected JTextField fecha;
 	protected JLabel lblIdentificador;
 	protected JLabel lblNombre;
 	protected JLabel lblPrecio;
 	protected JLabel lblUnidades;
 	protected JLabel lblDescripcin;
+	protected JLabel lblFecha;
 	protected JLabel lblMarcaOComponente;
 	protected JLabel lblModeloOFabricante;
 	protected JLabel lblSOperativoOProcesador;
@@ -75,6 +77,7 @@ public class DialogoPadre extends JDialog implements ChangeListener {
 		setResizable(false);
 		setModal(true);
 		getContentPane().setLayout(null);
+		contentPanel.setSize(444, 268);
 		contentPanel.setLayout(null);
 		
 		panel = new JPanel();
@@ -224,6 +227,15 @@ public class DialogoPadre extends JDialog implements ChangeListener {
 		fabricante.setBounds(328, 87, 86, 20);
 		contentPanel.add(fabricante);
 		fabricante.setColumns(10);
+		
+		lblFecha = new JLabel("Fecha");
+		lblFecha.setBounds(23, 212, 79, 14);
+		contentPanel.add(lblFecha);
+		
+		fecha = new JTextField();
+		fecha.setBounds(129, 211, 86, 20);
+		contentPanel.add(fecha);
+		fecha.setColumns(10);
 		{
 			buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -363,6 +375,7 @@ public class DialogoPadre extends JDialog implements ChangeListener {
 	/**
 	 * Muestra el producto pasado como argumento
 	 * @param producto a mostrar
+	 * @throws FabricanteNoValidoException 
 	 */
 	@SuppressWarnings("unchecked")
 	protected void mostrarProducto(Producto producto){
@@ -374,6 +387,7 @@ public class DialogoPadre extends JDialog implements ChangeListener {
 			precio.setText(String.valueOf(componente.getPrecio()));
 			unidades.setText(String.valueOf(componente.getUnidades()));
 			descripcion.setText(componente.getDescripcion());
+			fecha.setText(componente.getFechaRecepcion().toString());
 			comboBoxMarcaOComponente.addItem(componente.getTipoComponente());
 			comboBoxMarcaOComponente.setSelectedItem(componente.getTipoComponente());
 			fabricante.setText(componente.getFabricante());
@@ -386,6 +400,7 @@ public class DialogoPadre extends JDialog implements ChangeListener {
 			precio.setText(String.valueOf(movil.getPrecio()));
 			unidades.setText(String.valueOf(movil.getUnidades()));
 			descripcion.setText(movil.getDescripcion());
+			fecha.setText(movil.getFechaRecepcion().toString());
 			comboBoxMarcaOComponente.addItem(movil.getMarcaMovil());
 			comboBoxMarcaOComponente.setSelectedItem(movil.getMarcaMovil());
 			comboBoxModelo.addItem(movil.getModeloMovil());
@@ -404,6 +419,7 @@ public class DialogoPadre extends JDialog implements ChangeListener {
 			precio.setText(String.valueOf(tablet.getPrecio()));
 			unidades.setText(String.valueOf(tablet.getUnidades()));
 			descripcion.setText(tablet.getDescripcion());
+			fecha.setText(tablet.getFechaRecepcion().toString());
 			comboBoxMarcaOComponente.addItem(tablet.getMarcaTablet());
 			comboBoxMarcaOComponente.setSelectedItem(tablet.getMarcaTablet());
 			comboBoxModelo.addItem(tablet.getModeloTablet());
@@ -426,6 +442,7 @@ public class DialogoPadre extends JDialog implements ChangeListener {
 		precio.setEnabled(false);
 		unidades.setEnabled(false);
 		descripcion.setEnabled(false);
+		fecha.setEnabled(false);
 		comboBoxMarcaOComponente.setEnabled(false);
 		comboBoxModelo.setEnabled(false);
 		comboBoxSistemaOperativo.setEnabled(false);

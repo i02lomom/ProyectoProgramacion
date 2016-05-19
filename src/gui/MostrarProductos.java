@@ -2,7 +2,9 @@ package gui;
 
 import funcionalidad.Producto;
 import funcionalidad.Tienda;
+
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.util.ListIterator;
 import java.awt.event.ActionEvent;
@@ -29,7 +31,7 @@ public class MostrarProductos extends DialogoPadre {
 		super();
 		ListIterator<Producto> listIterator=tienda.getAlmacen().listIterator();
 		setTitle("Mostrar Productos");
-		setBounds(100, 100, 455, 344);
+		setBounds(100, 100, 455, 390);
 		buttonPane.setVisible(false);
 		
 		botonesPorDefecto();
@@ -39,39 +41,35 @@ public class MostrarProductos extends DialogoPadre {
 		btnAnterior.setIcon(new ImageIcon(MostrarProductos.class.getResource("/imagenes/anterior.png")));
 		btnAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!productoAMostrar.equals(listIterator.previous())){
+				if(!productoAMostrar.equals(listIterator.previous()))	
 					listIterator.next();
-					mostrarAnterior(listIterator);
-				}
-				else
-					mostrarAnterior(listIterator);
+				mostrarAnterior(listIterator);	
 			}
 		});
-		btnAnterior.setBounds(43, 214, 68, 57);
+		btnAnterior.setBounds(43, 250, 68, 57);
 		contentPanel.add(btnAnterior);
 		
 		btnSiguiente = new JButton("");
 		btnSiguiente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(!productoAMostrar.equals(listIterator.next())){
-					listIterator.previous();
-					mostrarSiguiente(listIterator);
-				}
-				else
-					mostrarSiguiente(listIterator);
+			public void actionPerformed(ActionEvent e){
+				if(!productoAMostrar.equals(listIterator.next()))
+					listIterator.previous();			
+				mostrarSiguiente(listIterator);	
 			}
 		});
 		btnSiguiente.setIcon(new ImageIcon(MostrarProductos.class.getResource("/imagenes/siguiente.png")));
-		btnSiguiente.setBounds(129, 214, 68, 57);
+		btnSiguiente.setBounds(129, 250, 68, 57);
 		contentPanel.add(btnSiguiente);
 		
 		mostrarSiguiente(listIterator);
+		
 		btnAnterior.setEnabled(false);
 	}
 	
 	/**
 	 * Muestra el anterior producto de la tienda
 	 * @param listIterator iterador del ArrayList
+	 * @throws FabricanteNoValidoException 
 	 */
 	private void mostrarAnterior(ListIterator<Producto> listIterator){		
 		productoAMostrar=listIterator.previous();
@@ -83,6 +81,7 @@ public class MostrarProductos extends DialogoPadre {
 	/**
 	 * Muestra el siguiente producto de la tienda
 	 * @param listIterator iterador del ArrayList
+	 * @throws FabricanteNoValidoException 
 	 */
 	private void mostrarSiguiente(ListIterator<Producto> listIterator){
 		productoAMostrar=listIterator.next();

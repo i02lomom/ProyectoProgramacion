@@ -2,6 +2,7 @@ package gui;
 
 import funcionalidad.Producto;
 import funcionalidad.Tienda;
+import funcionalidad.excepciones.DescripcionNoValidaException;
 import funcionalidad.excepciones.PrecioNoValidoException;
 import funcionalidad.excepciones.ProductoNoExisteException;
 
@@ -43,8 +44,9 @@ public class Modificar extends DialogoPadre {
 			@Override
 			public void focusLost(FocusEvent e) {
 				try {
-					producto = tienda.getProducto(nombre.getText());
+					producto = tienda.getProductoPorNombre(nombre.getText());
 					mostrarProducto(producto);
+					
 					precio.setEnabled(true);
 					descripcion.setEnabled(true);
 					enviar.setEnabled(true);
@@ -85,7 +87,7 @@ public class Modificar extends DialogoPadre {
 				JOptionPane.showMessageDialog(contentPanel,
 						"Las unidades deben ser números enteros",
 						"Error", JOptionPane.ERROR_MESSAGE);
-			} catch (PrecioNoValidoException e1) {
+			} catch (PrecioNoValidoException | DescripcionNoValidaException e1) {
 				JOptionPane.showMessageDialog(contentPanel,
 						e1.getMessage(),
 						"Error", JOptionPane.ERROR_MESSAGE);

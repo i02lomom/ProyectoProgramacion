@@ -40,7 +40,7 @@ public class AnadirUnidades extends DialogoPadre {
 			@Override
 			public void focusLost(FocusEvent e) {
 				try {
-					producto = tienda.getProducto(nombre.getText());
+					producto = tienda.getProductoPorNombre(nombre.getText());
 					mostrarProducto(producto);
 					enviar.setEnabled(true);
 				} catch (ProductoNoExisteException e1) {
