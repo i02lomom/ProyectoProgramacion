@@ -3,9 +3,12 @@ package funcionalidad;
 import java.util.regex.Pattern;
 
 import funcionalidad.enumeraciones.TipoComponente;
+import funcionalidad.excepciones.DescripcionNoValidaException;
 import funcionalidad.excepciones.IdNoValidaException;
+import funcionalidad.excepciones.NombreNoValidoException;
 import funcionalidad.excepciones.NumeroUnidadesNoValidoException;
 import funcionalidad.excepciones.PrecioNoValidoException;
+import funcionalidad.excepciones.TipoDeComponenteNoValidoException;
 
 /**
  * Clase componente. Un componente además de los atributos del padre tendrá:
@@ -23,7 +26,7 @@ public class Componente extends Producto{
 	/**
 	 * Patrón que debe seguir la id de un componente
 	 */
-	private static final Pattern patternID = Pattern.compile("^CO\\d{4}|co\\d{4}$");
+	private static final Pattern patternID = Pattern.compile("^co\\d{4}$",Pattern.CASE_INSENSITIVE);
 	
 	/**
 	 * Tipo de componente
@@ -48,10 +51,15 @@ public class Componente extends Producto{
 	 * @throws IdNoValidaException id no válida
 	 * @throws NumeroUnidadesNoValidoException número de unidades no válido
 	 * @throws PrecioNoValidoException  precio no válido
+	 * @throws NombreNoValidoException 
+	 * @throws DescripcionNoValidaException 
+	 * @throws TipoDeComponenteNoValidoException 
+	 * @throws FabricanteNoValidoException 
 	 */
-	Componente(String id,String nombre,String descripcion,float precio,int unidades,
+	public Componente(String id,String nombre,String descripcion,float precio,int unidades,
 			TipoComponente tipoComponente,String fabricante) 
-			throws IdNoValidaException, NumeroUnidadesNoValidoException, PrecioNoValidoException{
+			throws IdNoValidaException, NumeroUnidadesNoValidoException, PrecioNoValidoException,
+				NombreNoValidoException, DescripcionNoValidaException, TipoDeComponenteNoValidoException{
 		
 		super(id,nombre,descripcion,precio,unidades);
 		setTipoComponente(tipoComponente);
@@ -88,22 +96,27 @@ public class Componente extends Producto{
 	/**
 	 * Establece el tipo de componente
 	 * @param tipoComponente 
+	 * @throws TipoDeComponenteNoValidoException 
 	 */
-	private void setTipoComponente(TipoComponente tipoComponente) {
+	private void setTipoComponente(TipoComponente tipoComponente) throws TipoDeComponenteNoValidoException {
+		if(tipoComponente==null)
+			throw new TipoDeComponenteNoValidoException("Debe seleccionar un tipo de componente.");
 		this.tipoComponente = tipoComponente;
 	}
 
 	/**
 	 * Obtiene el fabricante del producto
 	 * @return fabricante del producto
+	 * @throws FabricanteNoValidoException 
 	 */
-	public String getFabricante() {
+	public String getFabricante(){	
 		return fabricante;
 	}
 
 	/**
 	 * Establece el fabricante del producto
 	 * @param fabricante del producto
+	 * @throws FabricanteNoValidoException 
 	 */
 	private void setFabricante(String fabricante) {
 		this.fabricante = fabricante;
@@ -116,30 +129,19 @@ public class Componente extends Producto{
 	 */
 	@Override
 	public float calcularPrecio(){
-		float precioConDescuento=0;
 		switch(tipoComponente){
 		case CAJA:
-			precioConDescuento=(float)(precio-(precio*0.03));
-			break;
+			return (float)(precio-(precio*0.03));
 		case GRAFICA:
-			precioConDescuento=(float)(precio-(precio*0.05));
-			break;
+			return (float)(precio-(precio*0.05));
 		case MEMORIA:
-			precioConDescuento=(float)(precio-(precio*0.06));
-			break;
+			return (float)(precio-(precio*0.06));
 		case PERIFERICO:
-			precioConDescuento=(float)(precio-(precio*0.08));
-			break;
+			return (float)(precio-(precio*0.08));
 		case PLACA:
-			precioConDescuento=(float)(precio-(precio*0.07));
-			break;
-		case PROCESADOR:
-			precioConDescuento=(float)(precio-(precio*0.04));
-			break;
+			return (float)(precio-(precio*0.07));
 		default:
-			break;
+			return (float)(precio-(precio*0.04));
 		}
-		return precioConDescuento;
 	}
-
 }

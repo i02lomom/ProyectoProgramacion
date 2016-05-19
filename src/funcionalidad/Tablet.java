@@ -4,7 +4,11 @@ import java.util.regex.Pattern;
 
 import funcionalidad.enumeraciones.MarcaTablet;
 import funcionalidad.enumeraciones.ModeloTablet;
+import funcionalidad.excepciones.DescripcionNoValidaException;
 import funcionalidad.excepciones.IdNoValidaException;
+import funcionalidad.excepciones.MarcaTabletNoValidaException;
+import funcionalidad.excepciones.ModeloTabletNoValidoException;
+import funcionalidad.excepciones.NombreNoValidoException;
 import funcionalidad.excepciones.NumeroUnidadesNoValidoException;
 import funcionalidad.excepciones.PrecioNoValidoException;
 
@@ -26,7 +30,7 @@ public class Tablet extends Producto {
 	/**
 	 * Patrón de la id para una tablet
 	 */
-	private static final Pattern patternID = Pattern.compile("^TA\\d{4}|ta\\d{4}$");
+	private static final Pattern patternID = Pattern.compile("^ta\\d{4}$",Pattern.CASE_INSENSITIVE);
 	
 	/**
 	 * Marca de la tablet
@@ -68,10 +72,16 @@ public class Tablet extends Producto {
 	 * @throws IdNoValidaException id no válida
 	 * @throws NumeroUnidadesNoValidoException número de unidades no válido
 	 * @throws PrecioNoValidoException precio no válido
+	 * @throws NombreNoValidoException 
+	 * @throws DescripcionNoValidaException 
+	 * @throws MarcaTabletNoValidaException 
+	 * @throws ModeloTabletNoValidoException 
 	 */
-	Tablet(String id,String nombre,String descripcion,float precio,int unidades,
+	public Tablet(String id,String nombre,String descripcion,float precio,int unidades,
 			MarcaTablet marcaTablet,ModeloTablet modeloTablet,String procesador,int memoria,float pantalla)
-			throws IdNoValidaException, NumeroUnidadesNoValidoException, PrecioNoValidoException{
+			throws IdNoValidaException, NumeroUnidadesNoValidoException, PrecioNoValidoException, 
+				NombreNoValidoException, DescripcionNoValidaException, MarcaTabletNoValidaException,
+				ModeloTabletNoValidoException{
 		super(id,nombre,descripcion,precio,unidades);
 		setMarcaTablet(marcaTablet);
 		setModeloTablet(modeloTablet);
@@ -110,8 +120,11 @@ public class Tablet extends Producto {
 	/**
 	 * Establece la marca de la tablet
 	 * @param marcaTablet marca de la tablet
+	 * @throws MarcaTabletNoValidaException 
 	 */
-	private void setMarcaTablet(MarcaTablet marcaTablet) {
+	private void setMarcaTablet(MarcaTablet marcaTablet) throws MarcaTabletNoValidaException {
+		if(marcaTablet==null)
+			throw new MarcaTabletNoValidaException("La marca de la tablet no puede estar vacía");
 		this.marcaTablet = marcaTablet;
 	}
 
@@ -126,8 +139,11 @@ public class Tablet extends Producto {
 	/**
 	 * Establece el modelo de la tablet 
 	 * @param modeloTablet modelo de la tablet
+	 * @throws ModeloTabletNoValidoException 
 	 */
-	private void setModeloTablet(ModeloTablet modeloTablet) {
+	private void setModeloTablet(ModeloTablet modeloTablet) throws ModeloTabletNoValidoException {
+		if(modeloTablet==null)
+			throw new ModeloTabletNoValidoException("El modelo de la tablet no puede estar vacío");
 		this.modeloTablet = modeloTablet;
 	}
 

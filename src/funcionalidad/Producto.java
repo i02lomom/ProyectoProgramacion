@@ -3,7 +3,9 @@ package funcionalidad;
 import java.io.Serializable;
 
 import fecha.Fecha;
+import funcionalidad.excepciones.DescripcionNoValidaException;
 import funcionalidad.excepciones.IdNoValidaException;
+import funcionalidad.excepciones.NombreNoValidoException;
 import funcionalidad.excepciones.NumeroUnidadesNoValidoException;
 import funcionalidad.excepciones.PrecioNoValidoException;
 
@@ -79,9 +81,12 @@ public abstract class Producto implements Serializable, Descuentable{
 	 * @throws IdNoValidaException id no válida
 	 * @throws NumeroUnidadesNoValidoException número de unidades no válido
 	 * @throws PrecioNoValidoException 
+	 * @throws NombreNoValidoException 
+	 * @throws DescripcionNoValidaException 
 	 */
-	Producto(String id,String nombre,String descripcion,float precio,int unidades) throws IdNoValidaException,
-			NumeroUnidadesNoValidoException, PrecioNoValidoException{
+	Producto(String id,String nombre,String descripcion,float precio,int unidades) throws
+			IdNoValidaException, NumeroUnidadesNoValidoException, PrecioNoValidoException, 
+			NombreNoValidoException, DescripcionNoValidaException{
 		super();
 		setId(id);
 		setNombre(nombre);
@@ -152,16 +157,22 @@ public abstract class Producto implements Serializable, Descuentable{
 	/**
 	 * Establece el nombre del producto
 	 * @param nombre del producto
+	 * @throws NombreNoValidoException 
 	 */
-	private void setNombre(String nombre) {
+	private void setNombre(String nombre) throws NombreNoValidoException {
+		if(nombre.equals(""))
+			throw new NombreNoValidoException("El nombre no puede estar vacío.");
 		this.nombre = nombre;
 	}
 
 	/**
 	 * Establece la descripción del producto
 	 * @param descripcion del producto
+	 * @throws DescripcionNoValidaException 
 	 */
-	public void setDescripcion(String descripcion) {
+	public void setDescripcion(String descripcion) throws DescripcionNoValidaException {
+		if(descripcion.equals(""))
+			throw new DescripcionNoValidaException("La descripción no puede estar vacía.");
 		this.descripcion = descripcion;
 	}
 
@@ -190,7 +201,7 @@ public abstract class Producto implements Serializable, Descuentable{
 	 * @throws NumeroUnidadesNoValidoException número de unidades no válido
 	 */
 	public void setUnidades(int unidades) throws NumeroUnidadesNoValidoException {
-		if(unidades<=0)
+		if(unidades<0)
 			throw new NumeroUnidadesNoValidoException("Las unidades deben de ser mayores que cero.");
 		this.unidades = unidades;
 	}

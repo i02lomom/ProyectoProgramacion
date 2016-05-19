@@ -5,9 +5,14 @@ import java.util.regex.Pattern;
 import funcionalidad.enumeraciones.MarcaMovil;
 import funcionalidad.enumeraciones.ModeloMovil;
 import funcionalidad.enumeraciones.SistemaOperativo;
+import funcionalidad.excepciones.DescripcionNoValidaException;
 import funcionalidad.excepciones.IdNoValidaException;
+import funcionalidad.excepciones.MarcaMovilNoValidaException;
+import funcionalidad.excepciones.ModeloMovilNoValidoException;
+import funcionalidad.excepciones.NombreNoValidoException;
 import funcionalidad.excepciones.NumeroUnidadesNoValidoException;
 import funcionalidad.excepciones.PrecioNoValidoException;
+import funcionalidad.excepciones.SistemaOperativoNoValidoException;
 
 /**
  * Clase Movil. Un móvil además de los atributos del padre tendrá:
@@ -28,7 +33,7 @@ public class Movil extends Producto {
 	/**
 	 * Patrón de la id para un móvil
 	 */
-	private static final Pattern patternID = Pattern.compile("^MO\\d{4}|mo\\d{4}$");
+	private static final Pattern patternID = Pattern.compile("^mo\\d{4}$",Pattern.CASE_INSENSITIVE);
 	/**
 	 * Marca del móvil
 	 */
@@ -76,11 +81,18 @@ public class Movil extends Producto {
 	 * @throws IdNoValidaException id no válida
 	 * @throws NumeroUnidadesNoValidoException número de unidades no válido
 	 * @throws PrecioNoValidoException 
+	 * @throws NombreNoValidoException 
+	 * @throws DescripcionNoValidaException 
+	 * @throws MarcaMovilNoValidaException 
+	 * @throws ModeloMovilNoValidoException 
+	 * @throws SistemaOperativoNoValidoException 
 	 */
-	Movil(String id,String nombre,String descripcion,float precio,int unidades,
+	public Movil(String id,String nombre,String descripcion,float precio,int unidades,
 			MarcaMovil marcaMovil,ModeloMovil modeloMovil,SistemaOperativo sistemaOperativo,
 			int camara,int memoria,String procesador) 
-			throws IdNoValidaException, NumeroUnidadesNoValidoException, PrecioNoValidoException{
+			throws IdNoValidaException, NumeroUnidadesNoValidoException, PrecioNoValidoException,
+				NombreNoValidoException, DescripcionNoValidaException, MarcaMovilNoValidaException,
+				ModeloMovilNoValidoException, SistemaOperativoNoValidoException{
 		super(id,nombre,descripcion,precio,unidades);
 		setMarcaMovil(marcaMovil);
 		setModeloMovil(modeloMovil);
@@ -120,8 +132,11 @@ public class Movil extends Producto {
 	/**
 	 * Establece la marca del móvil
 	 * @param marcaMovil marca del móvil
+	 * @throws MarcaMovilNoValidaException 
 	 */
-	private void setMarcaMovil(MarcaMovil marcaMovil) {
+	private void setMarcaMovil(MarcaMovil marcaMovil) throws MarcaMovilNoValidaException {
+		if(marcaMovil==null)
+			throw new MarcaMovilNoValidaException("La marca del móvil no puede estar vacía");
 		this.marcaMovil = marcaMovil;
 	}
 
@@ -136,8 +151,11 @@ public class Movil extends Producto {
 	/**
 	 * Establece el modelo del móvil
 	 * @param modeloMovil modelo del móvil
+	 * @throws ModeloMovilNoValidoException 
 	 */
-	private void setModeloMovil(ModeloMovil modeloMovil) {
+	private void setModeloMovil(ModeloMovil modeloMovil) throws ModeloMovilNoValidoException {
+		if(modeloMovil==null)
+			throw new ModeloMovilNoValidoException("El modelo del móvil no puede estar vacío");
 		this.modeloMovil = modeloMovil;
 	}
 
@@ -152,8 +170,11 @@ public class Movil extends Producto {
 	/**
 	 * Establece el sistema operativo del móvil
 	 * @param sistemaOperativo sistema operativo del móvil
+	 * @throws SistemaOperativoNoValidoException 
 	 */
-	private void setSistemaOperativo(SistemaOperativo sistemaOperativo) {
+	private void setSistemaOperativo(SistemaOperativo sistemaOperativo) throws SistemaOperativoNoValidoException {
+		if(sistemaOperativo==null)
+			throw new SistemaOperativoNoValidoException("El sistema operativo no puede estar vacío");
 		this.sistemaOperativo = sistemaOperativo;
 	}
 

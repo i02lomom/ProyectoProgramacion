@@ -3,17 +3,9 @@ package funcionalidad;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import funcionalidad.enumeraciones.MarcaMovil;
-import funcionalidad.enumeraciones.MarcaTablet;
-import funcionalidad.enumeraciones.ModeloMovil;
-import funcionalidad.enumeraciones.ModeloTablet;
-import funcionalidad.enumeraciones.SistemaOperativo;
-import funcionalidad.enumeraciones.TipoComponente;
-import funcionalidad.excepciones.IdNoValidaException;
-import funcionalidad.excepciones.NumeroUnidadesNoValidoException;
-import funcionalidad.excepciones.PrecioNoValidoException;
 import funcionalidad.excepciones.ProductoNoExisteException;
 import funcionalidad.excepciones.ProductoYaExisteException;
+
 
 /**
  * Clase Tienda. Envoltorio de ArrayList de productos. Contiene los métodos:
@@ -63,84 +55,6 @@ public class Tienda implements Serializable{
 	public void setModificado(boolean modificado) {
 		this.modificado = modificado;
 	}
-	
-	/**
-	 * Añade un producto de tipo componente
-	 * @param id del producto
-	 * @param nombre del producto
-	 * @param descripcion del producto
-	 * @param precio del producto
-	 * @param unidades del producto
-	 * @param tipoComponente del producto
-	 * @param fabricante del producto
-	 * @return true si se añade correctamente
-	 * @throws IdNoValidaException id no válida
-	 * @throws NumeroUnidadesNoValidoException número de unidades no válido
-	 * @throws PrecioNoValidoException precio no válido
-	 * @throws ProductoYaExisteException ya existe el producto en la lista
-	 */
-	public boolean anadir(String id,String nombre,String descripcion,float precio,
-			int unidades,TipoComponente tipoComponente,String fabricante) 
-			throws IdNoValidaException, NumeroUnidadesNoValidoException,
-			PrecioNoValidoException, ProductoYaExisteException{
-		Producto producto=new Componente(id,nombre,descripcion,precio,unidades,tipoComponente,fabricante);
-		return anadirProducto(producto);
-	}
-	
-	/**
-	 * Añade un producto de tipo móvil
-	 * @param id del producto
-	 * @param nombre del producto
-	 * @param descripcion del producto
-	 * @param precio del producto
-	 * @param unidades del producto
-	 * @param marcaMovil del producto
-	 * @param modeloMovil del producto
-	 * @param sistemaOperativo del producto
-	 * @param camara del producto
-	 * @param memoria del producto
-	 * @param procesador del producto
-	 * @return true si se añade correctamente
-	 * @throws IdNoValidaException id no válida
-	 * @throws NumeroUnidadesNoValidoException número de unidades no válido
-	 * @throws PrecioNoValidoException precio no válido
-	 * @throws ProductoYaExisteException ya existe el producto en la lista
-	 */
-	public boolean anadir(String id,String nombre,String descripcion,float precio,int unidades,
-			MarcaMovil marcaMovil,ModeloMovil modeloMovil,SistemaOperativo sistemaOperativo,
-			int camara,int memoria,String procesador) 
-			throws IdNoValidaException, NumeroUnidadesNoValidoException,
-			PrecioNoValidoException, ProductoYaExisteException{
-		Producto producto=new Movil(id,nombre,descripcion,precio,unidades,marcaMovil,
-				modeloMovil,sistemaOperativo,camara,memoria,procesador);
-		return anadirProducto(producto);
-	}
-	
-	/**
-	 * Añade un producto de tipo tablet
-	 * @param id del producto
-	 * @param nombre del producto
-	 * @param descripcion del producto
-	 * @param precio del producto
-	 * @param unidades del producto
-	 * @param marcaTablet del producto
-	 * @param modeloTablet del producto
-	 * @param memoria del producto
-	 * @param pantalla del producto
-	 * @return true si se añade correctamente
-	 * @throws IdNoValidaException id no válida
-	 * @throws NumeroUnidadesNoValidoException número de unidades no válido
-	 * @throws PrecioNoValidoException precio no válido
-	 * @throws ProductoYaExisteException ya existe el producto en la lista
-	 */
-	public boolean anadir(String id,String nombre,String descripcion,float precio,int unidades,
-			MarcaTablet marcaTablet,ModeloTablet modeloTablet,String procesador,int memoria,float pantalla)
-			throws IdNoValidaException, NumeroUnidadesNoValidoException, 
-			PrecioNoValidoException, ProductoYaExisteException{
-		Producto producto=new Tablet(id,nombre,descripcion,precio,unidades,marcaTablet,
-				modeloTablet,procesador,memoria,pantalla);
-		return anadirProducto(producto);
-	}
 
 	/**
 	 * Añade el producto a la lista siempre que no exista previamente.
@@ -148,7 +62,7 @@ public class Tienda implements Serializable{
 	 * @return true si se añade
 	 * @throws ProductoYaExisteException ya existe el producto en la lista
 	 */
-	private boolean anadirProducto(Producto producto) throws ProductoYaExisteException {
+	public boolean anadirProducto(Producto producto) throws ProductoYaExisteException {
 		if (almacen.contains(producto))
 			throw new ProductoYaExisteException("El producto ya existe");
 		return almacen.add(producto);
@@ -161,7 +75,7 @@ public class Tienda implements Serializable{
 	 * @throws ProductoNoExisteException el producto no existe en la lista
 	 */
 	public boolean eliminar(String id) throws ProductoNoExisteException{
-		Producto producto = get(id);
+		Producto producto = getProductoPorId(id);
 		if (!almacen.contains(producto))
 			throw new ProductoNoExisteException("El producto no existe");
 		return almacen.remove(producto);
@@ -181,7 +95,7 @@ public class Tienda implements Serializable{
 	 * @return producto
 	 * @throws ProductoNoExisteException el producto no existe en la lista
 	 */
-	public Producto get(String id) throws ProductoNoExisteException{
+	public Producto getProductoPorId(String id) throws ProductoNoExisteException{
 		for (Producto producto: almacen) {
 			if (producto.getId().equals(id))
 				return producto;
@@ -195,7 +109,7 @@ public class Tienda implements Serializable{
 	 * @return producto
 	 * @throws ProductoNoExisteException el producto no existe
 	 */
-	public Producto getProducto(String nombre) throws ProductoNoExisteException{
+	public Producto getProductoPorNombre(String nombre) throws ProductoNoExisteException{
 		for (Producto producto: almacen) {
 			if (producto.getNombre().equals(nombre))
 				return producto;
