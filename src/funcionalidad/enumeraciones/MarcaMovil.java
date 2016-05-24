@@ -1,9 +1,9 @@
 package funcionalidad.enumeraciones;
 
 /**
- * EnumeraciÃ³n MarcaMovil. Contiene las marcas de mÃ³viles.
+ * Enumeración MarcaMovil. Contiene las marcas de móviles.
  * 
- * @author Miguel Angel LÃ³pez Moyano
+ * @author Miguel Angel López Moyano
  * @version 1.0
  */
 public enum MarcaMovil {
