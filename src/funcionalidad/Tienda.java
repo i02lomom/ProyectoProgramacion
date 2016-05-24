@@ -42,7 +42,7 @@ public class Tienda implements Serializable{
 	
 	/**
 	 * Comprueba si la lista de prodcutos está modificada
-	 * @return modificado
+	 * @return modificado (true si está modificado y false si no)
 	 */
 	public boolean estaModificado() {
 		return modificado;
@@ -50,7 +50,7 @@ public class Tienda implements Serializable{
 
 	/**
 	 * Establece el valor de modificado (true o false)
-	 * @param modificado
+	 * @param modificado (true o false)
 	 */
 	public void setModificado(boolean modificado) {
 		this.modificado = modificado;
@@ -106,7 +106,7 @@ public class Tienda implements Serializable{
 	/**
 	 * Devuelve el producto buscando a través del nombre
 	 * @param nombre del producto
-	 * @return producto
+	 * @return producto encontrado
 	 * @throws ProductoNoExisteException el producto no existe
 	 */
 	public Producto getProductoPorNombre(String nombre) throws ProductoNoExisteException{

@@ -80,12 +80,12 @@ public class Movil extends Producto {
 	 * @param procesador del móvil
 	 * @throws IdNoValidaException id no válida
 	 * @throws NumeroUnidadesNoValidoException número de unidades no válido
-	 * @throws PrecioNoValidoException 
-	 * @throws NombreNoValidoException 
-	 * @throws DescripcionNoValidaException 
-	 * @throws MarcaMovilNoValidaException 
-	 * @throws ModeloMovilNoValidoException 
-	 * @throws SistemaOperativoNoValidoException 
+	 * @throws PrecioNoValidoException precio no válido
+	 * @throws NombreNoValidoException nombre no válido
+	 * @throws DescripcionNoValidaException descripción no válida
+	 * @throws MarcaMovilNoValidaException marca del móvil no válida
+	 * @throws ModeloMovilNoValidoException modelo de móvil no válido
+	 * @throws SistemaOperativoNoValidoException sistema operativo no válido
 	 */
 	public Movil(String id,String nombre,String descripcion,float precio,int unidades,
 			MarcaMovil marcaMovil,ModeloMovil modeloMovil,SistemaOperativo sistemaOperativo,
@@ -113,6 +113,7 @@ public class Movil extends Producto {
 	
 	/**
 	 * Establece la id del producto
+	 * @throws IdNoValidaException la id no es válida
 	 */
 	@Override
 	protected void setId(String id) throws IdNoValidaException {
@@ -132,7 +133,7 @@ public class Movil extends Producto {
 	/**
 	 * Establece la marca del móvil
 	 * @param marcaMovil marca del móvil
-	 * @throws MarcaMovilNoValidaException 
+	 * @throws MarcaMovilNoValidaException la marca del móvil no es válida
 	 */
 	private void setMarcaMovil(MarcaMovil marcaMovil) throws MarcaMovilNoValidaException {
 		if(marcaMovil==null)
@@ -151,7 +152,7 @@ public class Movil extends Producto {
 	/**
 	 * Establece el modelo del móvil
 	 * @param modeloMovil modelo del móvil
-	 * @throws ModeloMovilNoValidoException 
+	 * @throws ModeloMovilNoValidoException el modelo del móvil no es válido
 	 */
 	private void setModeloMovil(ModeloMovil modeloMovil) throws ModeloMovilNoValidoException {
 		if(modeloMovil==null)
@@ -170,7 +171,7 @@ public class Movil extends Producto {
 	/**
 	 * Establece el sistema operativo del móvil
 	 * @param sistemaOperativo sistema operativo del móvil
-	 * @throws SistemaOperativoNoValidoException 
+	 * @throws SistemaOperativoNoValidoException el sistema operativo no es válido
 	 */
 	private void setSistemaOperativo(SistemaOperativo sistemaOperativo) throws SistemaOperativoNoValidoException {
 		if(sistemaOperativo==null)
@@ -231,6 +232,7 @@ public class Movil extends Producto {
 	 * cuanto mayor es la calidad de la cámara menor será el descuento. Por ejemplo un móvil con
 	 * cámara de 8 megapíxeles recibe un descuento del 12,5%, uno de 16 recibe 6,25% y así
 	 * sucesivamente
+	 * @return precio con descuento ya aplicado
 	 */
 	@Override
 	public float calcularPrecio(){

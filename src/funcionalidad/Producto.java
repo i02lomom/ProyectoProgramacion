@@ -80,9 +80,9 @@ public abstract class Producto implements Serializable, Descuentable{
 	 * @param unidades del producto
 	 * @throws IdNoValidaException id no válida
 	 * @throws NumeroUnidadesNoValidoException número de unidades no válido
-	 * @throws PrecioNoValidoException 
-	 * @throws NombreNoValidoException 
-	 * @throws DescripcionNoValidaException 
+	 * @throws PrecioNoValidoException precio no válido
+	 * @throws NombreNoValidoException nombre no válido
+	 * @throws DescripcionNoValidaException descripción no válida
 	 */
 	Producto(String id,String nombre,String descripcion,float precio,int unidades) throws
 			IdNoValidaException, NumeroUnidadesNoValidoException, PrecioNoValidoException, 
@@ -115,7 +115,7 @@ public abstract class Producto implements Serializable, Descuentable{
 
 	/**
 	 * Obtiene la descripción del producto
-	 * @return
+	 * @return descripcion
 	 */
 	public String getDescripcion() {
 		return descripcion;
@@ -123,7 +123,7 @@ public abstract class Producto implements Serializable, Descuentable{
 
 	/**
 	 * Obtiene el precio del producto
-	 * @return
+	 * @return precio
 	 */
 	public float getPrecio() {
 		return precio;
@@ -139,7 +139,7 @@ public abstract class Producto implements Serializable, Descuentable{
 
 	/**
 	 * Obtiene las unidades del producto
-	 * @return
+	 * @return unidades número de unidades
 	 */
 	public int getUnidades() {
 		return unidades;
@@ -157,7 +157,7 @@ public abstract class Producto implements Serializable, Descuentable{
 	/**
 	 * Establece el nombre del producto
 	 * @param nombre del producto
-	 * @throws NombreNoValidoException 
+	 * @throws NombreNoValidoException el nombre no es válido
 	 */
 	private void setNombre(String nombre) throws NombreNoValidoException {
 		if(nombre.equals(""))
@@ -168,7 +168,7 @@ public abstract class Producto implements Serializable, Descuentable{
 	/**
 	 * Establece la descripción del producto
 	 * @param descripcion del producto
-	 * @throws DescripcionNoValidaException 
+	 * @throws DescripcionNoValidaException descripción no válida
 	 */
 	public void setDescripcion(String descripcion) throws DescripcionNoValidaException {
 		if(descripcion.equals(""))
@@ -179,7 +179,7 @@ public abstract class Producto implements Serializable, Descuentable{
 	/**
 	 * Establece el precio del producto
 	 * @param precio del producto
-	 * @throws PrecioNoValidoException 
+	 * @throws PrecioNoValidoException el precio no es válido
 	 */
 	public void setPrecio(float precio) throws PrecioNoValidoException {
 		if(precio<=0)

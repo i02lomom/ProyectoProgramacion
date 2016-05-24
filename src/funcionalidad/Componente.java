@@ -50,11 +50,10 @@ public class Componente extends Producto{
 	 * @param fabricante del producto
 	 * @throws IdNoValidaException id no válida
 	 * @throws NumeroUnidadesNoValidoException número de unidades no válido
-	 * @throws PrecioNoValidoException  precio no válido
-	 * @throws NombreNoValidoException 
-	 * @throws DescripcionNoValidaException 
-	 * @throws TipoDeComponenteNoValidoException 
-	 * @throws FabricanteNoValidoException 
+	 * @throws PrecioNoValidoException precio no válido
+	 * @throws NombreNoValidoException nombre no válido
+	 * @throws DescripcionNoValidaException descrición no válida
+	 * @throws TipoDeComponenteNoValidoException tipo de componente no válido
 	 */
 	public Componente(String id,String nombre,String descripcion,float precio,int unidades,
 			TipoComponente tipoComponente,String fabricante) 
@@ -77,6 +76,8 @@ public class Componente extends Producto{
 	
 	/**
 	 * Establece la id del producto
+	 * @param id del producto
+	 * @throws IdNoValidaException la id no es válida
 	 */
 	@Override
 	protected void setId(String id) throws IdNoValidaException {
@@ -95,8 +96,8 @@ public class Componente extends Producto{
 
 	/**
 	 * Establece el tipo de componente
-	 * @param tipoComponente 
-	 * @throws TipoDeComponenteNoValidoException 
+	 * @param tipoComponente tipo de componente
+	 * @throws TipoDeComponenteNoValidoException tipo de componente no válido
 	 */
 	private void setTipoComponente(TipoComponente tipoComponente) throws TipoDeComponenteNoValidoException {
 		if(tipoComponente==null)
@@ -107,7 +108,6 @@ public class Componente extends Producto{
 	/**
 	 * Obtiene el fabricante del producto
 	 * @return fabricante del producto
-	 * @throws FabricanteNoValidoException 
 	 */
 	public String getFabricante(){	
 		return fabricante;
@@ -116,7 +116,6 @@ public class Componente extends Producto{
 	/**
 	 * Establece el fabricante del producto
 	 * @param fabricante del producto
-	 * @throws FabricanteNoValidoException 
 	 */
 	private void setFabricante(String fabricante) {
 		this.fabricante = fabricante;

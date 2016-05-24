@@ -20,10 +20,10 @@ public class Fichero {
 	/**
 	 * Abre un fichero y devuelve la tienda almacenada dentro de éste
 	 * @param file fichero
-	 * @return tienda
-	 * @throws FileNotFoundException
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @return tienda leida del fichero
+	 * @throws FileNotFoundException fichero no encontrado
+	 * @throws IOException error de entrada/salida
+	 * @throws ClassNotFoundException fichero con información distinta a la esperada
 	 */
 	public static Tienda leerFichero(File file) throws FileNotFoundException, IOException, ClassNotFoundException{
 		file = comprobarExtension(file);
@@ -37,8 +37,8 @@ public class Fichero {
 	 * Guarda la tienda en un fichero
 	 * @param file fichero
 	 * @param tienda a guardar
-	 * @throws FileNotFoundException
-	 * @throws IOException
+	 * @throws FileNotFoundException fichero no encontrado
+	 * @throws IOException error de entrada/salida
 	 */
 	public static void escribirFichero(File file, Tienda tienda) throws FileNotFoundException, IOException{
 		file=comprobarExtension(file);

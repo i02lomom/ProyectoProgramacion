@@ -60,22 +60,23 @@ public class Tablet extends Producto {
 	/**
 	 * Constructor que recibe la id, el nombre, la descripción, el precio, el número de unidades, la marca,
 	 * el modelo, la memoria y la pantalla de la tablet.
-	 * @param id
-	 * @param nombre
-	 * @param descripcion
-	 * @param precio
-	 * @param unidades
-	 * @param marcaTablet
-	 * @param modeloTablet
-	 * @param memoria
-	 * @param pantalla
+	 * @param id del producto
+	 * @param nombre del producto
+	 * @param descripcion del producto
+	 * @param precio del producto
+	 * @param unidades del producto
+	 * @param marcaTablet marca del producto
+	 * @param modeloTablet modelo del producto
+	 * @param memoria del producto
+	 * @param procesador del producto
+	 * @param pantalla del producto
 	 * @throws IdNoValidaException id no válida
 	 * @throws NumeroUnidadesNoValidoException número de unidades no válido
 	 * @throws PrecioNoValidoException precio no válido
-	 * @throws NombreNoValidoException 
-	 * @throws DescripcionNoValidaException 
-	 * @throws MarcaTabletNoValidaException 
-	 * @throws ModeloTabletNoValidoException 
+	 * @throws NombreNoValidoException nombre no válido
+	 * @throws DescripcionNoValidaException descripción no válida
+	 * @throws MarcaTabletNoValidaException marca no válida
+	 * @throws ModeloTabletNoValidoException modelo no válido
 	 */
 	public Tablet(String id,String nombre,String descripcion,float precio,int unidades,
 			MarcaTablet marcaTablet,ModeloTablet modeloTablet,String procesador,int memoria,float pantalla)
@@ -101,6 +102,7 @@ public class Tablet extends Producto {
 	
 	/**
 	 * Establece la id del producto
+	 * @throws IdNoValidaException id no válida
 	 */
 	@Override
 	protected void setId(String id) throws IdNoValidaException {
@@ -120,7 +122,7 @@ public class Tablet extends Producto {
 	/**
 	 * Establece la marca de la tablet
 	 * @param marcaTablet marca de la tablet
-	 * @throws MarcaTabletNoValidaException 
+	 * @throws MarcaTabletNoValidaException marca no válida
 	 */
 	private void setMarcaTablet(MarcaTablet marcaTablet) throws MarcaTabletNoValidaException {
 		if(marcaTablet==null)
@@ -139,7 +141,7 @@ public class Tablet extends Producto {
 	/**
 	 * Establece el modelo de la tablet 
 	 * @param modeloTablet modelo de la tablet
-	 * @throws ModeloTabletNoValidoException 
+	 * @throws ModeloTabletNoValidoException modelo no válido
 	 */
 	private void setModeloTablet(ModeloTablet modeloTablet) throws ModeloTabletNoValidoException {
 		if(modeloTablet==null)
@@ -173,7 +175,7 @@ public class Tablet extends Producto {
 
 	/**
 	 * Establece el tamaño de la pantalla
-	 * @param pantalla
+	 * @param pantalla tamaño de la pantalla
 	 */
 	private void setPantalla(float pantalla) {
 		this.pantalla = pantalla;
@@ -200,6 +202,7 @@ public class Tablet extends Producto {
 	 * cuanto mayor es el tamaño de la pantalla menor será el descuento. Por ejemplo una tablet con
 	 * pantalla de 7 pulgadas recibe un descuento del 14,2%, una de 10 recibe un descuento del 10%
 	 * y así sucesivamente
+	 * @return precio con descuento ya aplicado
 	 */
 	@Override
 	public float calcularPrecio(){
