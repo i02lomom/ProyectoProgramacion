@@ -26,7 +26,7 @@ public class MostrarTablets extends DialogoPadre {
 	/**
 	 * Constructor que recibe el ArrayList tienda y el ArrayList tiendaTablets
 	 * @param tienda ArrayList de productos
-	 * @param tiendaMoviles ArrayList de productos (solo tablets)
+	 * @param tiendaTablets ArrayList de productos (solo tablets)
 	 */
 	public MostrarTablets(Tienda tienda,Tienda tiendaTablets){
 		super();
@@ -77,7 +77,6 @@ public class MostrarTablets extends DialogoPadre {
 	/**
 	 * Muestra el anterior producto de la tienda
 	 * @param listIterator iterador del ArrayList
-	 * @throws FabricanteNoValidoException 
 	 */
 	private void mostrarAnterior(ListIterator<Producto> listIterator){		
 		productoAMostrar=listIterator.previous();
@@ -89,7 +88,6 @@ public class MostrarTablets extends DialogoPadre {
 	/**
 	 * Muestra el siguiente producto de la tienda
 	 * @param listIterator iterador del ArrayList
-	 * @throws FabricanteNoValidoException 
 	 */
 	private void mostrarSiguiente(ListIterator<Producto> listIterator){
 		productoAMostrar=listIterator.next();

@@ -14,10 +14,20 @@ import funcionalidad.excepciones.ProductoNoExisteException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Clase RealizarVenta. Nos permitirá realizar la venta de una serie de unidades de un producto.
+ * 
+ * @author Miguel Angel Löpez Moyano
+ * @version 1.0
+ */
 public class RealizarVenta extends DialogoPadre {
 	private static final long serialVersionUID = 1L;
 	private Producto producto;
 	
+	/**
+	 * Constructor
+	 * @param tienda ArrayList de productos
+	 */
 	public RealizarVenta(Tienda tienda){
 		super();
 		setTitle("Realizar venta");

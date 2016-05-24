@@ -15,7 +15,6 @@ import funcionalidad.Tienda;
  * 
  * @author Miguel Angel López Moyano
  * @version 1.0
- *
  */
 public class MostrarComponentes extends DialogoPadre {
 	private static final long serialVersionUID = 1L;
@@ -28,7 +27,6 @@ public class MostrarComponentes extends DialogoPadre {
 	 * Constructor que recibe el ArrayList tienda y el ArrayList tiendaComponentes
 	 * @param tienda ArrayList de productos
 	 * @param tiendaComponentes ArrayList de productos (solo Componentes)
-	 * @throws FabricanteNoValidoException 
 	 */
 	public MostrarComponentes(Tienda tienda,Tienda tiendaComponentes){
 		super();
@@ -83,19 +81,16 @@ public class MostrarComponentes extends DialogoPadre {
 	/**
 	 * Muestra el anterior producto de la tienda
 	 * @param listIterator iterador del ArrayList
-	 * @throws FabricanteNoValidoException 
 	 */
 	private void mostrarAnterior(ListIterator<Producto> listIterator){		
 		productoAMostrar=listIterator.previous();
 		mostrarProducto(productoAMostrar);
-		comprobarBotones(listIterator);
-		
+		comprobarBotones(listIterator);	
 	}
 	
 	/**
 	 * Muestra el siguiente producto de la tienda
 	 * @param listIterator iterador del ArrayList
-	 * @throws FabricanteNoValidoException 
 	 */
 	private void mostrarSiguiente(ListIterator<Producto> listIterator){
 		productoAMostrar=listIterator.next();

@@ -29,7 +29,15 @@ import javax.swing.JFileChooser;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
+/**
+ * Clase principal. Desde este menú se podrá acceder a todas las opciones del programa
+ * 
+ * @author Miguel Angel López Moyano
+ * @version 1.0
+ */
 public class Principal {
 	private int returnVal;
 	private File file;
@@ -55,7 +63,8 @@ public class Principal {
 	private RealizarVenta realizarVenta;
 
 	/**
-	 * Launch the application.
+	 * Lanza la aplicación
+	 * @param args argumentos que recibirá main
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -71,21 +80,29 @@ public class Principal {
 	}
 
 	/**
-	 * Create the application.
+	 * Inicializa la aplicación
 	 */
 	public Principal() {
 		initialize();
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Inicializa los contenidos de la ventana
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				if(comprobarCambios())
+					return;
+				System.exit(0);
+			}
+		});
 		frame.setBounds(100, 100, 455, 344);
 		frame.setResizable(false);
 		actualizarTitulo("Tienda: Sin título");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		fileChooser.setFileFilter(filter);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -292,6 +309,10 @@ public class Principal {
 		frame.getContentPane().add(lblImagen);
 	}
 	
+	/**
+	 * Actualiza el título de la ventana
+	 * @param titulo que se le pondrá
+	 */
 	private void actualizarTitulo(String titulo){
 		frame.setTitle(titulo);
 	}
@@ -366,7 +387,6 @@ public class Principal {
 	
 	/**
 	 * Crea una nueva ventana MostrarComponentes y la pone visible
-	 * @throws FabricanteNoValidoException 
 	 */
 	private void mostrarComponentes(){
 		if(!tiendaVacia(tienda)){
@@ -498,13 +518,19 @@ public class Principal {
 	 */
 	private boolean comprobarCambios() {
 		if (tienda.estaModificado()) {
-			if (JOptionPane.showOptionDialog(frame, "¿Desea guardar los cambios?", "Confirmar",
+			switch (JOptionPane.showOptionDialog(frame, "¿Desea guardar los cambios?", "Confirmar",
 					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null,
-					null) == JOptionPane.YES_OPTION){
+					null)){	
+			case JOptionPane.YES_OPTION:
 				guardar();
 				tienda.setModificado(false);
+				return false;	
+			case JOptionPane.NO_OPTION:
+				return false;	
+			
+			default:				
+				return true;
 			}
-			return true;
 		}
 		return false;
 	}
@@ -513,7 +539,7 @@ public class Principal {
 	 * Comprueba si se ha modificado la tienda, se guarda si así lo desea el usuario y crea una
 	 * nueva tienda (vacía)
 	 */
-	void nuevo() {
+	private void nuevo() {
 		comprobarCambios();
 		inicializar();  //Creamos una tienda nueva y ponemos modificado a false
 		file=null;	//Ponemos el file a null para indicar que el fichero es nuevo
@@ -550,6 +576,7 @@ public class Principal {
 	
 	/**
 	 * Nos permite leer una tienda guardada en un fichero.
+	 * @param file fichero
 	 */
 	public void abrir(File file) {
 		try {
@@ -583,7 +610,7 @@ public class Principal {
 	 * no se le pedirá al usuario. En caso contrario el usuario deberá dar un nombre al fichero
 	 * para guardarlo
 	 */
-	void guardar() {
+	private void guardar() {
 		if(file==null)	//Si no hemos guardado previamente preguntamos el nombre del fichero
 			guardarComo();
 		else {
@@ -608,9 +635,9 @@ public class Principal {
 	 * Guarda en un fichero la tienda actual. Obligatoriamente se le pedirá al usuario un nombre
 	 * de fichero para guardarlo.
 	 */
-	void guardarComo() {
+	private void guardarComo() {
 		try {
-			returnVal = fileChooser.showOpenDialog(frame);
+			returnVal = fileChooser.showSaveDialog(frame);
 			if (returnVal == JFileChooser.APPROVE_OPTION)
 				file=fileChooser.getSelectedFile();
 			if(file!=null){

@@ -375,7 +375,6 @@ public class DialogoPadre extends JDialog implements ChangeListener {
 	/**
 	 * Muestra el producto pasado como argumento
 	 * @param producto a mostrar
-	 * @throws FabricanteNoValidoException 
 	 */
 	@SuppressWarnings("unchecked")
 	protected void mostrarProducto(Producto producto){

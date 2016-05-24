@@ -42,8 +42,8 @@ public class MostrarProductos extends DialogoPadre {
 		btnAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!productoAMostrar.equals(listIterator.previous()))	
-					listIterator.next();
-				mostrarAnterior(listIterator);	
+					listIterator.next();			
+				mostrarAnterior(listIterator);					
 			}
 		});
 		btnAnterior.setBounds(43, 250, 68, 57);
@@ -51,10 +51,10 @@ public class MostrarProductos extends DialogoPadre {
 		
 		btnSiguiente = new JButton("");
 		btnSiguiente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){
+			public void actionPerformed(ActionEvent e) {
 				if(!productoAMostrar.equals(listIterator.next()))
-					listIterator.previous();			
-				mostrarSiguiente(listIterator);	
+					listIterator.previous();
+				mostrarSiguiente(listIterator);		
 			}
 		});
 		btnSiguiente.setIcon(new ImageIcon(MostrarProductos.class.getResource("/imagenes/siguiente.png")));
@@ -69,25 +69,21 @@ public class MostrarProductos extends DialogoPadre {
 	/**
 	 * Muestra el anterior producto de la tienda
 	 * @param listIterator iterador del ArrayList
-	 * @throws FabricanteNoValidoException 
 	 */
 	private void mostrarAnterior(ListIterator<Producto> listIterator){		
 		productoAMostrar=listIterator.previous();
 		mostrarProducto(productoAMostrar);
-		comprobarBotones(listIterator);
-		
+		comprobarBotones(listIterator);	
 	}
 	
 	/**
 	 * Muestra el siguiente producto de la tienda
 	 * @param listIterator iterador del ArrayList
-	 * @throws FabricanteNoValidoException 
 	 */
 	private void mostrarSiguiente(ListIterator<Producto> listIterator){
 		productoAMostrar=listIterator.next();
 		mostrarProducto(productoAMostrar);
-		comprobarBotones(listIterator);
-		
+		comprobarBotones(listIterator);		
 	}
 	
 	/**
