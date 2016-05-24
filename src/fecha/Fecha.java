@@ -8,6 +8,12 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+/**
+ * Clase fecha. Nos permite realizar las operaciones más comunes con fechas.
+ * 
+ * @author Miguel Angel López Moyano
+ * @version 1.0
+ */
 public class Fecha implements Serializable{
 	private static final long serialVersionUID = 1L;
 
@@ -21,9 +27,13 @@ public class Fecha implements Serializable{
 	public Fecha(){
 		calendar=new GregorianCalendar(locale);
 	}
+	
 	/**
 	 * Constructor que recibe como parámetros el día, el mes y el año
-	 * @throws FechaNoValidaException 
+	 * @param dia de la fecha
+	 * @param mes de la fecha
+	 * @param anno de la fecha
+	 * @throws FechaNoValidaException la fecha no es válida
 	 */
 	public Fecha(int dia,int mes,int anno) throws FechaNoValidaException{
 		if(!esValida(dia,mes-1,anno))
@@ -32,9 +42,10 @@ public class Fecha implements Serializable{
 	
 	/**
 	 * Constructor que recibe como parámetro la fecha (como cadena)
-	 * @throws FormatoNoValidoException 
-	 * @throws NumberFormatException 
-	 * @throws FechaNoValidaException 
+	 * @param cadena fecha en formato String
+	 * @throws FormatoNoValidoException el formato no es válido
+	 * @throws NumberFormatException conversión no válida
+	 * @throws FechaNoValidaException la fecha no es válida
 	 */
 	public Fecha(String cadena) throws FormatoNoValidoException, NumberFormatException, FechaNoValidaException{
 		if(!esValidoFormato(cadena))
@@ -45,7 +56,7 @@ public class Fecha implements Serializable{
 
 	/**
 	 * Comprueba si el formato de la fecha es válido
-	 * @param cadena
+	 * @param cadena fecha 
 	 * @return true si la cadena cumple el patrón
 	 */
 	private boolean esValidoFormato(String cadena){
@@ -55,7 +66,7 @@ public class Fecha implements Serializable{
 	
 	/**
 	 * A partir de una cadena obtenemos un array con 3 subcadenas, el día el mes y el año
-	 * @param cadena
+	 * @param cadena fecha
 	 * @return array de cadenas
 	 */
 	private String[] obtenerArrayDiaMesAnno(String cadena){
@@ -64,10 +75,10 @@ public class Fecha implements Serializable{
 	
 	/**
 	 * Suma a la fecha los días,meses y años dados
-	 * @param dias
-	 * @param meses
-	 * @param annos
-	 * @throws SumaNoValidaException
+	 * @param dias los días de la fecha
+	 * @param meses los meses de la fecha
+	 * @param annos los años de la fecha 
+	 * @throws SumaNoValidaException la suma no es válida
 	 */
 	public void sumar(int dias,int meses,int annos) throws SumaNoValidaException{
 		if(dias<0 || meses<0 || annos<0)
@@ -80,9 +91,9 @@ public class Fecha implements Serializable{
 	
 	/**
 	 * Comprueba si la fecha dada a través de enteros (día, mes y año) es válida
-	 * @param dia
-	 * @param mes
-	 * @param anno
+	 * @param dia de la fecha
+	 * @param mes de la fecha
+	 * @param anno de la fecha
 	 * @return true si es válida y false si no lo es
 	 */
 	private boolean esValida(int dia,int mes,int anno){
@@ -96,7 +107,7 @@ public class Fecha implements Serializable{
 	
 	/**
 	 * Comprueba si la fecha dada a través de una cadena es válida
-	 * @param cadena
+	 * @param cadena fecha
 	 * @return true si es válida y false si no lo es
 	 */
 	private boolean esValida(String cadena){
@@ -112,7 +123,7 @@ public class Fecha implements Serializable{
 	
 	/**
 	 * Calcula la diferencia en días entre dos fechas
-	 * @param fecha
+	 * @param fecha de la que calcularemos los días
 	 * @return diferencia en días
 	 */
 	public long calcularDiasTranscurridos(Fecha fecha){
@@ -129,7 +140,7 @@ public class Fecha implements Serializable{
 	
 	/**
 	 * Calcula la diferencia en años entre dos fechas 
-	 * @param fecha
+	 * @param fecha de la que calcularemos los años transcurridos
 	 * @return diferencia en años
 	 */
 	public long calcularAnnosTranscurridos(Fecha fecha){
@@ -163,7 +174,7 @@ public class Fecha implements Serializable{
 	
 	/**
 	 * Comprueba si una fecha es posterior a la actual
-	 * @return
+	 * @return true si la fecha es posterior y false si no.
 	 */
 	public boolean esFuturo(){
 		return calendar.after(GregorianCalendar.getInstance());
@@ -187,7 +198,7 @@ public class Fecha implements Serializable{
 	
 	/**
 	 * Obtiene la edad a partir de la fecha de nacimiento
-	 * @return edad
+	 * @return edad obtenida a través de la fecha de nacimiento
 	 */
 	public int obtenerEdad(){
 		LocalDate fecha=LocalDate.of(calendar.get(GregorianCalendar.YEAR),
@@ -201,10 +212,10 @@ public class Fecha implements Serializable{
 	
 	/**
 	 * Crea una nueva fecha siempre que ésta sea válida
-	 * @param dia
-	 * @param mes
-	 * @param anno
-	 * @throws FechaNoValidaException
+	 * @param dia de la fecha
+	 * @param mes de la fecha
+	 * @param anno de la fecha
+	 * @throws FechaNoValidaException la fecha no es válida
 	 */
 	void setGregorianCalendar(int dia,int mes,int anno) throws FechaNoValidaException{
 		try {
@@ -217,6 +228,10 @@ public class Fecha implements Serializable{
 		}
 	}
 	
+	/**
+	 * Obtiene la fecha
+	 * @return fecha
+	 */
 	public GregorianCalendar getFecha() {
 		return calendar;
 	}
