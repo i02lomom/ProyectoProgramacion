@@ -44,9 +44,9 @@ public class Principal {
 	private JFileChooser fileChooser = new JFileChooser();
 	private FileFilter filter = new FileNameExtensionFilter("Archivos de objeto (*.obj)", "obj");
 	private Tienda<Producto> tienda=new Tienda<Producto>();
-	private Tienda<Tablet> tiendaTablets;
-	private Tienda<Movil> tiendaMoviles;
-	private Tienda<Componente> tiendaComponentes;
+	private Tienda<Producto> tiendaTablets;
+	private Tienda<Producto> tiendaMoviles;
+	private Tienda<Producto> tiendaComponentes;
 	private JFrame frame;
 	private Ayuda ayuda;
 	private Anadir anadir;
@@ -57,9 +57,6 @@ public class Principal {
 	private AnadirUnidades anadirUnidades;
 	private MostrarPorNombre mostrarPorNombre;
 	private MostrarProductos mostrarProductos;
-	private MostrarTablets mostrarTablets;
-	private MostrarMoviles mostrarMoviles;
-	private MostrarComponentes mostrarComponentes;
 	private RealizarVenta realizarVenta;
 
 	/**
@@ -390,11 +387,11 @@ public class Principal {
 	 */
 	private void mostrarComponentes(){
 		if(!tiendaVacia(tienda)){
-			crearArrayComponentes(tienda);
-			tiendaComponentes=new Tienda<Componente>();
+			tiendaComponentes=new Tienda<Producto>();
+			crearArrayComponentes(tienda);	
 			if(!tiendaComponentes.getAlmacen().isEmpty()){
-				mostrarComponentes=new MostrarComponentes(tienda,tiendaComponentes);
-				mostrarComponentes.setVisible(true);
+				mostrarProductos=new MostrarProductos(tiendaComponentes);
+				mostrarProductos.setVisible(true);
 			}
 			else
 				JOptionPane.showMessageDialog(frame,
@@ -408,11 +405,11 @@ public class Principal {
 	 */
 	private void mostrarTablets(){
 		if(!tiendaVacia(tienda)){
-			tiendaTablets=new Tienda<Tablet>();
+			tiendaTablets=new Tienda<Producto>();
 			crearArrayTablets(tienda);
 			if(!tiendaTablets.getAlmacen().isEmpty()){
-				mostrarTablets=new MostrarTablets(tienda,tiendaTablets);
-				mostrarTablets.setVisible(true);
+				mostrarProductos=new MostrarProductos(tiendaTablets);
+				mostrarProductos.setVisible(true);
 			}
 			else
 				JOptionPane.showMessageDialog(frame,
@@ -426,11 +423,11 @@ public class Principal {
 	 */
 	private void mostrarMoviles(){
 		if(!tiendaVacia(tienda)){
+			tiendaMoviles=new Tienda<Producto>();
 			crearArrayMoviles(tienda);
-			tiendaMoviles=new Tienda<Movil>();
 			if(!tiendaMoviles.getAlmacen().isEmpty()){
-				mostrarMoviles=new MostrarMoviles(tienda,tiendaMoviles);
-				mostrarMoviles.setVisible(true);
+				mostrarProductos=new MostrarProductos(tiendaMoviles);
+				mostrarProductos.setVisible(true);
 			}
 			else
 				JOptionPane.showMessageDialog(frame,
