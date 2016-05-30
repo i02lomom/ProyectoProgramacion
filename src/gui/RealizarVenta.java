@@ -10,7 +10,7 @@ import fecha.Fecha;
 import funcionalidad.Producto;
 import funcionalidad.Tienda;
 import funcionalidad.excepciones.NumeroUnidadesNoValidoException;
-import funcionalidad.excepciones.ProductoNoExisteException;
+import funcionalidad.excepciones.ElementoNoExisteException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -28,7 +28,7 @@ public class RealizarVenta extends DialogoPadre {
 	 * Constructor
 	 * @param tienda ArrayList de productos
 	 */
-	public RealizarVenta(Tienda tienda){
+	public RealizarVenta(Tienda<Producto> tienda){
 		super();
 		setTitle("Realizar venta");
 		setBounds(100, 100, 455, 344);
@@ -47,7 +47,7 @@ public class RealizarVenta extends DialogoPadre {
 					producto = tienda.getProductoPorId(identificador.getText().toUpperCase());
 					mostrarProducto(producto);
 					enviar.setEnabled(true);
-				} catch (ProductoNoExisteException e1) {
+				} catch (ElementoNoExisteException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
 							e1.getMessage(), "Error",
 							JOptionPane.ERROR_MESSAGE);

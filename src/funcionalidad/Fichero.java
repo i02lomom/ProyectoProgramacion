@@ -25,11 +25,12 @@ public class Fichero {
 	 * @throws IOException error de entrada/salida
 	 * @throws ClassNotFoundException fichero con información distinta a la esperada
 	 */
-	public static Tienda leerFichero(File file) throws FileNotFoundException, IOException, ClassNotFoundException{
+	@SuppressWarnings("unchecked")
+	public static Tienda<Producto> leerFichero(File file) throws FileNotFoundException, IOException, ClassNotFoundException{
 		file = comprobarExtension(file);
 		try(ObjectInputStream in=new ObjectInputStream(
 				new BufferedInputStream(new FileInputStream(file)))) {
-			return (Tienda) in.readObject();
+			return (Tienda<Producto>) in.readObject();
 		}
 	}
 	
@@ -40,7 +41,7 @@ public class Fichero {
 	 * @throws FileNotFoundException fichero no encontrado
 	 * @throws IOException error de entrada/salida
 	 */
-	public static void escribirFichero(File file, Tienda tienda) throws FileNotFoundException, IOException{
+	public static void escribirFichero(File file, Tienda<Producto> tienda) throws FileNotFoundException, IOException{
 		file=comprobarExtension(file);
 		try(ObjectOutputStream out = new ObjectOutputStream(
 				new BufferedOutputStream(new FileOutputStream(file)))) {

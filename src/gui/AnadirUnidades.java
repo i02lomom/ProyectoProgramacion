@@ -3,7 +3,7 @@ package gui;
 import funcionalidad.Producto;
 import funcionalidad.Tienda;
 import funcionalidad.excepciones.NumeroUnidadesNoValidoException;
-import funcionalidad.excepciones.ProductoNoExisteException;
+import funcionalidad.excepciones.ElementoNoExisteException;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -26,7 +26,7 @@ public class AnadirUnidades extends DialogoPadre {
 	 * Constructor que recibe el ArrayList tienda
 	 * @param tienda ArrayList de productos
 	 */
-	public AnadirUnidades(Tienda tienda){
+	public AnadirUnidades(Tienda<Producto> tienda){
 		super();
 		setTitle("Añadir unidades");
 		setBounds(100, 100, 455, 344);
@@ -43,7 +43,7 @@ public class AnadirUnidades extends DialogoPadre {
 					producto = tienda.getProductoPorNombre(nombre.getText());
 					mostrarProducto(producto);
 					enviar.setEnabled(true);
-				} catch (ProductoNoExisteException e1) {
+				} catch (ElementoNoExisteException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
 							e1.getMessage(), "Error",
 							JOptionPane.ERROR_MESSAGE);

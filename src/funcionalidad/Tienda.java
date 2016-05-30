@@ -3,8 +3,8 @@ package funcionalidad;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import funcionalidad.excepciones.ProductoNoExisteException;
-import funcionalidad.excepciones.ProductoYaExisteException;
+import funcionalidad.excepciones.ElementoNoExisteException;
+import funcionalidad.excepciones.ElementoYaExisteException;
 
 
 /**
@@ -19,13 +19,13 @@ import funcionalidad.excepciones.ProductoYaExisteException;
  * @author Miguel Angel López Moyano
  * @version 1.0
  */
-public class Tienda implements Serializable{
+public class Tienda<E> implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Lista de productos.
 	 */
-	private ArrayList<Producto> almacen=new ArrayList<Producto>();
+	private ArrayList<E> almacen=new ArrayList<E>();
 	
 	/**
 	 * Atributo que indica si se ha modificado la lista
@@ -36,7 +36,7 @@ public class Tienda implements Serializable{
 	 * Devuelve la lista de productos
 	 * @return almacen lista de productos
 	 */
-	public ArrayList<Producto> getAlmacen(){
+	public ArrayList<E> getAlmacen(){
 		return almacen;
 	}
 	
@@ -60,25 +60,25 @@ public class Tienda implements Serializable{
 	 * Añade el producto a la lista siempre que no exista previamente.
 	 * @param producto a añadir
 	 * @return true si se añade
-	 * @throws ProductoYaExisteException ya existe el producto en la lista
+	 * @throws ElementoYaExisteException ya existe el producto en la lista
 	 */
-	public boolean anadirProducto(Producto producto) throws ProductoYaExisteException {
-		if (almacen.contains(producto))
-			throw new ProductoYaExisteException("El producto ya existe");
-		return almacen.add(producto);
+	public boolean anadirProducto(E elemento) throws ElementoYaExisteException {
+		if (almacen.contains(elemento))
+			throw new ElementoYaExisteException("El producto ya existe");
+		return almacen.add(elemento);
 	}
 	
 	/**
 	 * Elimina un producto a través de la id
 	 * @param id del producto
 	 * @return true si se elimina correctamente
-	 * @throws ProductoNoExisteException el producto no existe en la lista
+	 * @throws ElementoNoExisteException el producto no existe en la lista
 	 */
-	public boolean eliminar(String id) throws ProductoNoExisteException{
-		Producto producto = getProductoPorId(id);
-		if (!almacen.contains(producto))
-			throw new ProductoNoExisteException("El producto no existe");
-		return almacen.remove(producto);
+	public boolean eliminar(String id) throws ElementoNoExisteException{
+		E elemento = getProductoPorId(id);
+		if (!almacen.contains(elemento))
+			throw new ElementoNoExisteException("El elemento no existe");
+		return almacen.remove(elemento);
 	}
 	
 	/**
@@ -93,27 +93,27 @@ public class Tienda implements Serializable{
 	 * Devuelve el producto buscando a través de la id.
 	 * @param id del producto
 	 * @return producto
-	 * @throws ProductoNoExisteException el producto no existe en la lista
+	 * @throws ElementoNoExisteException el producto no existe en la lista
 	 */
-	public Producto getProductoPorId(String id) throws ProductoNoExisteException{
-		for (Producto producto: almacen) {
-			if (producto.getId().equals(id))
-				return producto;
+	public E getProductoPorId(String id) throws ElementoNoExisteException{
+		for (E elemento: almacen) {
+			if (((Producto) elemento).getId().equals(id))
+				return elemento;
 		}
-		throw new ProductoNoExisteException("El producto no existe");
+		throw new ElementoNoExisteException("El elemento no existe");
 	}
 	
 	/**
 	 * Devuelve el producto buscando a través del nombre
 	 * @param nombre del producto
 	 * @return producto encontrado
-	 * @throws ProductoNoExisteException el producto no existe
+	 * @throws ElementoNoExisteException el producto no existe
 	 */
-	public Producto getProductoPorNombre(String nombre) throws ProductoNoExisteException{
-		for (Producto producto: almacen) {
-			if (producto.getNombre().equals(nombre))
-				return producto;
+	public E getProductoPorNombre(String nombre) throws ElementoNoExisteException{
+		for (E elemento: almacen) {
+			if (((Producto) elemento).getNombre().equals(nombre))
+				return elemento;
 		}
-		throw new ProductoNoExisteException("El producto no existe");
+		throw new ElementoNoExisteException("El elemento no existe");
 	}
 }

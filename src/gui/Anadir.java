@@ -29,7 +29,7 @@ public class Anadir extends DialogoPadre {
 	 * Constructor que recibe el ArrayList tienda
 	 * @param tienda ArrayList de productos
 	 */
-	public Anadir(Tienda tienda){
+	public Anadir(Tienda<Producto> tienda){
 		super();
 		setTitle("Añadir");
 		setBounds(100, 100, 455, 344);
@@ -50,7 +50,7 @@ public class Anadir extends DialogoPadre {
 								+ "Seleccione otra Id", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					}
-				} catch (ProductoNoExisteException e1) {
+				} catch (ElementoNoExisteException e1) {
 				}
 			}
 		});
@@ -110,7 +110,7 @@ public class Anadir extends DialogoPadre {
 							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					identificador.setForeground(Color.RED);
 				} catch (NumeroUnidadesNoValidoException
-						| PrecioNoValidoException | ProductoYaExisteException |
+						| PrecioNoValidoException | ElementoYaExisteException |
 						NombreNoValidoException | DescripcionNoValidaException |
 						TipoDeComponenteNoValidoException | MarcaMovilNoValidaException | 
 						ModeloMovilNoValidoException | SistemaOperativoNoValidoException | 

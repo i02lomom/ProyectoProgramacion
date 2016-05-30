@@ -7,6 +7,7 @@ import java.util.ListIterator;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import funcionalidad.Componente;
 import funcionalidad.Producto;
 import funcionalidad.Tienda;
 
@@ -28,10 +29,10 @@ public class MostrarComponentes extends DialogoPadre {
 	 * @param tienda ArrayList de productos
 	 * @param tiendaComponentes ArrayList de productos (solo Componentes)
 	 */
-	public MostrarComponentes(Tienda tienda,Tienda tiendaComponentes){
+	public MostrarComponentes(Tienda<Producto> tienda,Tienda<Componente> tiendaComponentes){
 		super();
 		
-		ListIterator<Producto> listIterator=tiendaComponentes.getAlmacen().listIterator();
+		ListIterator<Componente> listIterator=tiendaComponentes.getAlmacen().listIterator();
 		setTitle("Mostrar Componentes");
 		setBounds(100, 100, 455, 390);
 		
@@ -82,7 +83,7 @@ public class MostrarComponentes extends DialogoPadre {
 	 * Muestra el anterior producto de la tienda
 	 * @param listIterator iterador del ArrayList
 	 */
-	private void mostrarAnterior(ListIterator<Producto> listIterator){		
+	private void mostrarAnterior(ListIterator<Componente> listIterator){		
 		productoAMostrar=listIterator.previous();
 		mostrarProducto(productoAMostrar);
 		comprobarBotones(listIterator);	
@@ -92,7 +93,7 @@ public class MostrarComponentes extends DialogoPadre {
 	 * Muestra el siguiente producto de la tienda
 	 * @param listIterator iterador del ArrayList
 	 */
-	private void mostrarSiguiente(ListIterator<Producto> listIterator){
+	private void mostrarSiguiente(ListIterator<Componente> listIterator){
 		productoAMostrar=listIterator.next();
 		mostrarProducto(productoAMostrar);
 		comprobarBotones(listIterator);
@@ -104,7 +105,7 @@ public class MostrarComponentes extends DialogoPadre {
 	 * siguiente en función de esto.
 	 * @param listIterator iterador del ArrayList
 	 */
-	private void comprobarBotones(ListIterator<Producto> listIterator){
+	private void comprobarBotones(ListIterator<Componente> listIterator){
 		if(!listIterator.hasNext()){
 			btnSiguiente.setEnabled(false);
 			listIterator.previous();

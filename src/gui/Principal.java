@@ -17,7 +17,7 @@ import funcionalidad.Movil;
 import funcionalidad.Producto;
 import funcionalidad.Tablet;
 import funcionalidad.Tienda;
-import funcionalidad.excepciones.ProductoYaExisteException;
+import funcionalidad.excepciones.ElementoYaExisteException;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -43,10 +43,10 @@ public class Principal {
 	private File file;
 	private JFileChooser fileChooser = new JFileChooser();
 	private FileFilter filter = new FileNameExtensionFilter("Archivos de objeto (*.obj)", "obj");
-	private Tienda tienda=new Tienda();
-	private Tienda tiendaTablets=new Tienda();
-	private Tienda tiendaMoviles=new Tienda();
-	private Tienda tiendaComponentes=new Tienda();
+	private Tienda<Producto> tienda=new Tienda<Producto>();
+	private Tienda<Tablet> tiendaTablets=new Tienda<Tablet>();
+	private Tienda<Movil> tiendaMoviles=new Tienda<Movil>();
+	private Tienda<Componente> tiendaComponentes=new Tienda<Componente>();
 	private JFrame frame;
 	private Ayuda ayuda;
 	private Anadir anadir;
@@ -460,7 +460,7 @@ public class Principal {
 	 * @param tienda ArrayList de productos
 	 * @return true si está vacía y false si no lo está
 	 */
-	private boolean tiendaVacia(Tienda tienda){
+	private boolean tiendaVacia(Tienda<Producto> tienda){
 		if(tienda.getAlmacen().size()==0){
 			JOptionPane.showMessageDialog(frame,
 				"No existe ningún producto en la lista", "Error",
@@ -474,12 +474,12 @@ public class Principal {
 	 * Crea un ArrayList donde se almacenarán solo los Componentes de tienda
 	 * @param tienda ArrayList de productos
 	 */
-	private void crearArrayComponentes(Tienda tienda){
+	private void crearArrayComponentes(Tienda<Producto> tienda){
 		for(Producto elemento:tienda.getAlmacen()){
 			if(elemento instanceof Componente)
 				try {
-					tiendaComponentes.anadirProducto(elemento);
-				} catch (ProductoYaExisteException e) {
+					tiendaComponentes.anadirProducto((Componente) elemento);
+				} catch (ElementoYaExisteException e) {
 				}
 		}
 	}
@@ -488,12 +488,12 @@ public class Principal {
 	 * Crea un ArrayList donde se almacenarán solo las Tablets de tienda
 	 * @param tienda ArrayList de productos
 	 */
-	private void crearArrayMoviles(Tienda tienda){
+	private void crearArrayMoviles(Tienda<Producto> tienda){
 		for(Producto elemento:tienda.getAlmacen()){
 			if(elemento instanceof Movil)
 				try {
-					tiendaMoviles.anadirProducto(elemento);
-				} catch (ProductoYaExisteException e) {
+					tiendaMoviles.anadirProducto((Movil) elemento);
+				} catch (ElementoYaExisteException e) {
 				}
 		}
 	}
@@ -502,12 +502,12 @@ public class Principal {
 	 * Crea un ArrayList donde se almacenarán solo las Tablets de tienda
 	 * @param tienda ArrayList de productos
 	 */
-	private void crearArrayTablets(Tienda tienda){
+	private void crearArrayTablets(Tienda<Producto> tienda){
 		for(Producto elemento:tienda.getAlmacen()){
 			if(elemento instanceof Tablet)
 				try {
-					tiendaTablets.anadirProducto(elemento);
-				} catch (ProductoYaExisteException e) {
+					tiendaTablets.anadirProducto((Tablet) elemento);
+				} catch (ElementoYaExisteException e) {
 				}
 		}
 	}
@@ -551,7 +551,7 @@ public class Principal {
 	 */
 	private void inicializar() {
 		tienda.setModificado(false);
-		tienda = new Tienda();
+		tienda = new Tienda<Producto>();
 	}
 	
 	/**

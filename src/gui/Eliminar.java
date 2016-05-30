@@ -2,7 +2,7 @@ package gui;
 
 import funcionalidad.Producto;
 import funcionalidad.Tienda;
-import funcionalidad.excepciones.ProductoNoExisteException;
+import funcionalidad.excepciones.ElementoNoExisteException;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -24,7 +24,7 @@ public class Eliminar extends DialogoPadre {
 	 * Constructor que recibe el ArrayList tienda
 	 * @param tienda ArrayList de productos
 	 */
-	public Eliminar(Tienda tienda){
+	public Eliminar(Tienda<Producto> tienda){
 		super();
 		setTitle("Eliminar");
 		setBounds(100, 100, 455, 344);
@@ -41,7 +41,7 @@ public class Eliminar extends DialogoPadre {
 					Producto producto=tienda.getProductoPorNombre(nombre.getText());
 					mostrarProducto(producto);
 					enviar.setEnabled(true);
-				} catch (ProductoNoExisteException e1) {
+				} catch (ElementoNoExisteException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
 							e1.getMessage(), "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -53,7 +53,7 @@ public class Eliminar extends DialogoPadre {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					gestionarRespuesta(tienda);
-				} catch (ProductoNoExisteException e1) {
+				} catch (ElementoNoExisteException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
 							e1.getMessage(), "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -65,9 +65,9 @@ public class Eliminar extends DialogoPadre {
 	/**
 	 * Pregunta al usuario si realmente desea eliminar el producto
 	 * @param tienda ArrayList de productos
-	 * @throws ProductoNoExisteException no existe el producto en la lista
+	 * @throws ElementoNoExisteException no existe el producto en la lista
 	 */
-	private void gestionarRespuesta(Tienda tienda) throws ProductoNoExisteException{
+	private void gestionarRespuesta(Tienda<Producto> tienda) throws ElementoNoExisteException{
 		switch(JOptionPane.showOptionDialog(contentPanel,
 				"¿Está seguro de que desea eliminarlo?", "Confirmar",
 				JOptionPane.YES_NO_CANCEL_OPTION,

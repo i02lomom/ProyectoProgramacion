@@ -7,6 +7,7 @@ import java.util.ListIterator;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import funcionalidad.Movil;
 import funcionalidad.Producto;
 import funcionalidad.Tienda;
 
@@ -28,10 +29,10 @@ public class MostrarMoviles extends DialogoPadre {
 	 * @param tienda ArrayList de productos
 	 * @param tiendaMoviles ArrayList de productos (solo móviles)
 	 */
-	public MostrarMoviles(Tienda tienda,Tienda tiendaMoviles){
+	public MostrarMoviles(Tienda<Producto> tienda,Tienda<Movil> tiendaMoviles){
 		super();
 		
-		ListIterator<Producto> listIterator=tiendaMoviles.getAlmacen().listIterator();
+		ListIterator<Movil> listIterator=tiendaMoviles.getAlmacen().listIterator();
 		setTitle("Mostrar Móviles");
 		setBounds(100, 100, 455, 390);
 		
@@ -79,7 +80,7 @@ public class MostrarMoviles extends DialogoPadre {
 	 * Muestra el anterior producto de la tienda
 	 * @param listIterator iterador del ArrayList
 	 */
-	private void mostrarAnterior(ListIterator<Producto> listIterator){		
+	private void mostrarAnterior(ListIterator<Movil> listIterator){		
 		productoAMostrar=listIterator.previous();
 		mostrarProducto(productoAMostrar);
 		comprobarBotones(listIterator);	
@@ -89,7 +90,7 @@ public class MostrarMoviles extends DialogoPadre {
 	 * Muestra el siguiente producto de la tienda
 	 * @param listIterator iterador del ArrayList
 	 */
-	private void mostrarSiguiente(ListIterator<Producto> listIterator){
+	private void mostrarSiguiente(ListIterator<Movil> listIterator){
 		productoAMostrar=listIterator.next();
 		mostrarProducto(productoAMostrar);
 		comprobarBotones(listIterator);
@@ -100,7 +101,7 @@ public class MostrarMoviles extends DialogoPadre {
 	 * siguiente en función de esto.
 	 * @param listIterator iterador del ArrayList
 	 */
-	private void comprobarBotones(ListIterator<Producto> listIterator){
+	private void comprobarBotones(ListIterator<Movil> listIterator){
 		if(!listIterator.hasNext()){
 			btnSiguiente.setEnabled(false);
 			listIterator.previous();

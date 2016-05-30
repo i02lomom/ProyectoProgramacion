@@ -2,7 +2,7 @@ package gui;
 
 import funcionalidad.Producto;
 import funcionalidad.Tienda;
-import funcionalidad.excepciones.ProductoNoExisteException;
+import funcionalidad.excepciones.ElementoNoExisteException;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -22,7 +22,7 @@ public class MostrarPorId extends DialogoPadre {
 	 * Constructor que recibe el ArrayList tienda
 	 * @param tienda ArrayList de productos
 	 */
-	public MostrarPorId(Tienda tienda){
+	public MostrarPorId(Tienda<Producto> tienda){
 		super();
 		setTitle("Buscar por Id");
 		setBounds(100, 100, 455, 344);
@@ -40,7 +40,7 @@ public class MostrarPorId extends DialogoPadre {
 				try {
 					Producto producto=tienda.getProductoPorId(identificador.getText().toUpperCase());
 					mostrarProducto(producto);
-				} catch (ProductoNoExisteException e1) {
+				} catch (ElementoNoExisteException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
 							e1.getMessage(), "Error",
 							JOptionPane.ERROR_MESSAGE);

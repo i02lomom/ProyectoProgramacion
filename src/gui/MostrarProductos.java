@@ -27,7 +27,7 @@ public class MostrarProductos extends DialogoPadre {
 	 * Constructor que recibe el ArrayList tienda
 	 * @param tienda ArrayList de productos
 	 */
-	public MostrarProductos(Tienda tienda){
+	public MostrarProductos(Tienda<Producto> tienda){
 		super();
 		ListIterator<Producto> listIterator=tienda.getAlmacen().listIterator();
 		setTitle("Mostrar Productos");
