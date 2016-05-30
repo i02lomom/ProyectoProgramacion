@@ -44,9 +44,9 @@ public class Principal {
 	private JFileChooser fileChooser = new JFileChooser();
 	private FileFilter filter = new FileNameExtensionFilter("Archivos de objeto (*.obj)", "obj");
 	private Tienda<Producto> tienda=new Tienda<Producto>();
-	private Tienda<Tablet> tiendaTablets=new Tienda<Tablet>();
-	private Tienda<Movil> tiendaMoviles=new Tienda<Movil>();
-	private Tienda<Componente> tiendaComponentes=new Tienda<Componente>();
+	private Tienda<Tablet> tiendaTablets;
+	private Tienda<Movil> tiendaMoviles;
+	private Tienda<Componente> tiendaComponentes;
 	private JFrame frame;
 	private Ayuda ayuda;
 	private Anadir anadir;
@@ -391,6 +391,7 @@ public class Principal {
 	private void mostrarComponentes(){
 		if(!tiendaVacia(tienda)){
 			crearArrayComponentes(tienda);
+			tiendaComponentes=new Tienda<Componente>();
 			if(!tiendaComponentes.getAlmacen().isEmpty()){
 				mostrarComponentes=new MostrarComponentes(tienda,tiendaComponentes);
 				mostrarComponentes.setVisible(true);
@@ -407,6 +408,7 @@ public class Principal {
 	 */
 	private void mostrarTablets(){
 		if(!tiendaVacia(tienda)){
+			tiendaTablets=new Tienda<Tablet>();
 			crearArrayTablets(tienda);
 			if(!tiendaTablets.getAlmacen().isEmpty()){
 				mostrarTablets=new MostrarTablets(tienda,tiendaTablets);
@@ -425,6 +427,7 @@ public class Principal {
 	private void mostrarMoviles(){
 		if(!tiendaVacia(tienda)){
 			crearArrayMoviles(tienda);
+			tiendaMoviles=new Tienda<Movil>();
 			if(!tiendaMoviles.getAlmacen().isEmpty()){
 				mostrarMoviles=new MostrarMoviles(tienda,tiendaMoviles);
 				mostrarMoviles.setVisible(true);
@@ -433,7 +436,6 @@ public class Principal {
 				JOptionPane.showMessageDialog(frame,
 						"No existe ningún móvil en la lista", "Error",
 						JOptionPane.ERROR_MESSAGE);
-			
 		}
 	}
 	
