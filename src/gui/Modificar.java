@@ -76,22 +76,7 @@ public class Modificar extends DialogoPadre {
 				JOptionPane.QUESTION_MESSAGE, null, null, null)){
 
 		case JOptionPane.YES_OPTION:
-			try {
-				producto.setPrecio(Float.parseFloat(precio.getText()));
-				producto.setDescripcion(descripcion.getText());
-				tienda.getAlmacen().set(tienda.getAlmacen().indexOf(producto), producto);
-				tienda.setModificado(true);
-				JOptionPane.showMessageDialog(contentPanel, "Producto modificado con éxito");
-				clear();
-			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(contentPanel,
-						"Las unidades deben ser números enteros",
-						"Error", JOptionPane.ERROR_MESSAGE);
-			} catch (PrecioNoValidoException | DescripcionNoValidaException e1) {
-				JOptionPane.showMessageDialog(contentPanel,
-						e1.getMessage(),
-						"Error", JOptionPane.ERROR_MESSAGE);
-			}
+			modificar(tienda);
 			break;
 		case JOptionPane.NO_OPTION:
 			break;
@@ -103,5 +88,28 @@ public class Modificar extends DialogoPadre {
 		
 		precio.setEnabled(false);
 		descripcion.setEnabled(false);
+	}
+
+	/**
+	 * Modifica el producto el producto
+	 * @param tienda ArrayList de productos
+	 */
+	private void modificar(Tienda<Producto> tienda) {
+		try {
+			producto.setPrecio(Float.parseFloat(precio.getText()));
+			producto.setDescripcion(descripcion.getText());
+			tienda.getAlmacen().set(tienda.getAlmacen().indexOf(producto), producto);
+			tienda.setModificado(true);
+			JOptionPane.showMessageDialog(contentPanel, "Producto modificado con éxito");
+			clear();
+		} catch (NumberFormatException e1) {
+			JOptionPane.showMessageDialog(contentPanel,
+					"Las unidades deben ser números enteros",
+					"Error", JOptionPane.ERROR_MESSAGE);
+		} catch (PrecioNoValidoException | DescripcionNoValidaException e1) {
+			JOptionPane.showMessageDialog(contentPanel,
+					e1.getMessage(),
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 }

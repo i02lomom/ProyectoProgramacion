@@ -16,7 +16,7 @@ import javax.swing.ImageIcon;
  * @author Miguel Angel López Moyano
  * @version 1.0
  */
-public class MostrarProductos extends DialogoPadre {
+public class MostrarProductos<E extends Producto>extends DialogoPadre {
 	private static final long serialVersionUID = 1L;
 	
 	private JButton btnAnterior;
@@ -27,9 +27,9 @@ public class MostrarProductos extends DialogoPadre {
 	 * Constructor que recibe el ArrayList tienda
 	 * @param tienda ArrayList de productos
 	 */
-	public MostrarProductos(Tienda<Producto> tienda){
+	public MostrarProductos(Tienda<E> tienda){
 		super();
-		ListIterator<Producto> listIterator=tienda.getAlmacen().listIterator();
+		ListIterator<E> listIterator=tienda.getAlmacen().listIterator();
 		setTitle("Mostrar Productos");
 		setBounds(100, 100, 455, 390);
 		buttonPane.setVisible(false);
@@ -70,7 +70,7 @@ public class MostrarProductos extends DialogoPadre {
 	 * Muestra el anterior producto de la tienda
 	 * @param listIterator iterador del ArrayList
 	 */
-	private void mostrarAnterior(ListIterator<Producto> listIterator){		
+	private void mostrarAnterior(ListIterator<E> listIterator){		
 		productoAMostrar=listIterator.previous();
 		mostrarProducto(productoAMostrar);
 		comprobarBotones(listIterator);	
@@ -80,7 +80,7 @@ public class MostrarProductos extends DialogoPadre {
 	 * Muestra el siguiente producto de la tienda
 	 * @param listIterator iterador del ArrayList
 	 */
-	private void mostrarSiguiente(ListIterator<Producto> listIterator){
+	private void mostrarSiguiente(ListIterator<E> listIterator){
 		productoAMostrar=listIterator.next();
 		mostrarProducto(productoAMostrar);
 		comprobarBotones(listIterator);		
@@ -91,7 +91,7 @@ public class MostrarProductos extends DialogoPadre {
 	 * siguiente en función de esto.
 	 * @param listIterator iterador del ArrayList
 	 */
-	private void comprobarBotones(ListIterator<Producto> listIterator){
+	private void comprobarBotones(ListIterator<E> listIterator){
 		if(!listIterator.hasNext()){
 			btnSiguiente.setEnabled(false);
 			listIterator.previous();

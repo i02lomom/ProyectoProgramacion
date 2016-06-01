@@ -44,9 +44,9 @@ public class Principal {
 	private JFileChooser fileChooser = new JFileChooser();
 	private FileFilter filter = new FileNameExtensionFilter("Archivos de objeto (*.obj)", "obj");
 	private Tienda<Producto> tienda=new Tienda<Producto>();
-	private Tienda<Producto> tiendaTablets;
-	private Tienda<Producto> tiendaMoviles;
-	private Tienda<Producto> tiendaComponentes;
+	private Tienda<Tablet> tiendaTablets;
+	private Tienda<Movil> tiendaMoviles;
+	private Tienda<Componente> tiendaComponentes;
 	private JFrame frame;
 	private Ayuda ayuda;
 	private Anadir anadir;
@@ -56,7 +56,7 @@ public class Principal {
 	private MostrarPorId mostrarPorId;
 	private AnadirUnidades anadirUnidades;
 	private MostrarPorNombre mostrarPorNombre;
-	private MostrarProductos mostrarProductos;
+	private MostrarProductos<?> mostrarProductos;
 	private RealizarVenta realizarVenta;
 
 	/**
@@ -377,7 +377,7 @@ public class Principal {
 	 */
 	private void mostrarProductos(){
 		if(!tiendaVacia(tienda)){
-			mostrarProductos=new MostrarProductos(tienda);
+			mostrarProductos=new MostrarProductos<Producto>(tienda);
 			mostrarProductos.setVisible(true);
 		}
 	}
@@ -387,10 +387,10 @@ public class Principal {
 	 */
 	private void mostrarComponentes(){
 		if(!tiendaVacia(tienda)){
-			tiendaComponentes=new Tienda<Producto>();
+			tiendaComponentes=new Tienda<Componente>();
 			crearArrayComponentes(tienda);	
 			if(!tiendaComponentes.getAlmacen().isEmpty()){
-				mostrarProductos=new MostrarProductos(tiendaComponentes);
+				mostrarProductos=new MostrarProductos<Componente>(tiendaComponentes);
 				mostrarProductos.setVisible(true);
 			}
 			else
@@ -405,10 +405,10 @@ public class Principal {
 	 */
 	private void mostrarTablets(){
 		if(!tiendaVacia(tienda)){
-			tiendaTablets=new Tienda<Producto>();
+			tiendaTablets=new Tienda<Tablet>();
 			crearArrayTablets(tienda);
 			if(!tiendaTablets.getAlmacen().isEmpty()){
-				mostrarProductos=new MostrarProductos(tiendaTablets);
+				mostrarProductos=new MostrarProductos<Tablet>(tiendaTablets);
 				mostrarProductos.setVisible(true);
 			}
 			else
@@ -423,10 +423,10 @@ public class Principal {
 	 */
 	private void mostrarMoviles(){
 		if(!tiendaVacia(tienda)){
-			tiendaMoviles=new Tienda<Producto>();
+			tiendaMoviles=new Tienda<Movil>();
 			crearArrayMoviles(tienda);
 			if(!tiendaMoviles.getAlmacen().isEmpty()){
-				mostrarProductos=new MostrarProductos(tiendaMoviles);
+				mostrarProductos=new MostrarProductos<Movil>(tiendaMoviles);
 				mostrarProductos.setVisible(true);
 			}
 			else
