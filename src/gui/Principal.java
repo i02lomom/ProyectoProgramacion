@@ -44,9 +44,6 @@ public class Principal {
 	private JFileChooser fileChooser = new JFileChooser();
 	private FileFilter filter = new FileNameExtensionFilter("Archivos de objeto (*.obj)", "obj");
 	private Tienda<Producto> tienda=new Tienda<Producto>();
-	private Tienda<Tablet> tiendaTablets;
-	private Tienda<Movil> tiendaMoviles;
-	private Tienda<Componente> tiendaComponentes;
 	private JFrame frame;
 	private Ayuda ayuda;
 	private Anadir anadir;
@@ -387,10 +384,10 @@ public class Principal {
 	 */
 	private void mostrarComponentes(){
 		if(!tiendaVacia(tienda)){
-			tiendaComponentes=new Tienda<Componente>();
-			crearArrayComponentes(tienda);	
-			if(!tiendaComponentes.getAlmacen().isEmpty()){
-				mostrarProductos=new MostrarProductos<Componente>(tiendaComponentes);
+			Tienda<Componente>tiendaAuxiliar=new Tienda<Componente>();
+			crearArrayComponentes(tienda,tiendaAuxiliar);	
+			if(!tiendaAuxiliar.getAlmacen().isEmpty()){
+				mostrarProductos=new MostrarProductos<Componente>(tiendaAuxiliar);
 				mostrarProductos.setVisible(true);
 			}
 			else
@@ -405,10 +402,10 @@ public class Principal {
 	 */
 	private void mostrarTablets(){
 		if(!tiendaVacia(tienda)){
-			tiendaTablets=new Tienda<Tablet>();
-			crearArrayTablets(tienda);
-			if(!tiendaTablets.getAlmacen().isEmpty()){
-				mostrarProductos=new MostrarProductos<Tablet>(tiendaTablets);
+			Tienda<Tablet>tiendaAuxiliar=new Tienda<Tablet>();
+			crearArrayTablets(tienda,tiendaAuxiliar);
+			if(!tiendaAuxiliar.getAlmacen().isEmpty()){
+				mostrarProductos=new MostrarProductos<Tablet>(tiendaAuxiliar);
 				mostrarProductos.setVisible(true);
 			}
 			else
@@ -423,10 +420,10 @@ public class Principal {
 	 */
 	private void mostrarMoviles(){
 		if(!tiendaVacia(tienda)){
-			tiendaMoviles=new Tienda<Movil>();
-			crearArrayMoviles(tienda);
-			if(!tiendaMoviles.getAlmacen().isEmpty()){
-				mostrarProductos=new MostrarProductos<Movil>(tiendaMoviles);
+			Tienda<Movil>tiendaAuxiliar=new Tienda<Movil>();
+			crearArrayMoviles(tienda,tiendaAuxiliar);
+			if(!tiendaAuxiliar.getAlmacen().isEmpty()){
+				mostrarProductos=new MostrarProductos<Movil>(tiendaAuxiliar);
 				mostrarProductos.setVisible(true);
 			}
 			else
@@ -472,12 +469,13 @@ public class Principal {
 	/**
 	 * Crea un ArrayList donde se almacenarán solo los Componentes de tienda
 	 * @param tienda ArrayList de productos
+	 * @param tiendaAuxiliar ArrayList de Componentes
 	 */
-	private void crearArrayComponentes(Tienda<Producto> tienda){
+	private void crearArrayComponentes(Tienda<Producto> tienda,Tienda<Componente>tiendaAuxiliar){
 		for(Producto elemento:tienda.getAlmacen()){
 			if(elemento instanceof Componente)
 				try {
-					tiendaComponentes.anadirProducto((Componente) elemento);
+					tiendaAuxiliar.anadirProducto((Componente) elemento);
 				} catch (ElementoYaExisteException e) {
 				}
 		}
@@ -486,12 +484,13 @@ public class Principal {
 	/**
 	 * Crea un ArrayList donde se almacenarán solo las Tablets de tienda
 	 * @param tienda ArrayList de productos
+	 * @param tiendaAuxiliar ArrayList de Móviles
 	 */
-	private void crearArrayMoviles(Tienda<Producto> tienda){
+	private void crearArrayMoviles(Tienda<Producto> tienda,Tienda<Movil> tiendaAuxiliar){
 		for(Producto elemento:tienda.getAlmacen()){
 			if(elemento instanceof Movil)
 				try {
-					tiendaMoviles.anadirProducto((Movil) elemento);
+					tiendaAuxiliar.anadirProducto((Movil) elemento);
 				} catch (ElementoYaExisteException e) {
 				}
 		}
@@ -500,12 +499,13 @@ public class Principal {
 	/**
 	 * Crea un ArrayList donde se almacenarán solo las Tablets de tienda
 	 * @param tienda ArrayList de productos
+	 * @param tiendaAuxiliar ArrayList de Tablets
 	 */
-	private void crearArrayTablets(Tienda<Producto> tienda){
+	private void crearArrayTablets(Tienda<Producto> tienda,Tienda<Tablet> tiendaAuxiliar){
 		for(Producto elemento:tienda.getAlmacen()){
 			if(elemento instanceof Tablet)
 				try {
-					tiendaTablets.anadirProducto((Tablet) elemento);
+					tiendaAuxiliar.anadirProducto((Tablet) elemento);
 				} catch (ElementoYaExisteException e) {
 				}
 		}

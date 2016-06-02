@@ -58,7 +58,7 @@ public class Tienda<E> implements Serializable{
 
 	/**
 	 * Añade el producto a la lista siempre que no exista previamente.
-	 * @param producto a añadir
+	 * @param elemento a añadir
 	 * @return true si se añade
 	 * @throws ElementoYaExisteException ya existe el producto en la lista
 	 */
