@@ -43,20 +43,36 @@ public class RealizarVenta extends DialogoPadre {
 		identificador.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
+				buscarProducto(tienda);		
+			}
+
+			/**
+			 * Busca el producto a través del identificador
+			 * @param tienda ArrayList de productos
+			 */
+			private void buscarProducto(Tienda<Producto> tienda) {
 				try {
-					producto = tienda.getProductoPorId(identificador.getText().toUpperCase());
+					producto = tienda.getProductoPorId(identificador.getText().toUpperCase().trim());
 					mostrarProducto(producto);
 					enviar.setEnabled(true);
 				} catch (ElementoNoExisteException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
 							e1.getMessage(), "Error",
 							JOptionPane.ERROR_MESSAGE);
-				}		
+				}
 			}
 		});
 		
 		enviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				realizarVenta(tienda);
+			}
+
+			/**
+			 * Realiza la venta de un producto siempre que el número de unidades sea correcto
+			 * @param tienda ArrayList de productos
+			 */
+			private void realizarVenta(Tienda<Producto> tienda) {
 				try {
 					int unidadesAVender=Integer.parseInt((String) JOptionPane.showInputDialog(
 						contentPanel,

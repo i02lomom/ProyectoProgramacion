@@ -43,6 +43,14 @@ public class Modificar extends DialogoPadre {
 		nombre.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
+				buscarProducto(tienda);		
+			}
+
+			/**
+			 * Busca el producto a través del nombre
+			 * @param tienda ArrayList de productos
+			 */
+			private void buscarProducto(Tienda<Producto> tienda) {
 				try {
 					producto = tienda.getProductoPorNombre(nombre.getText());
 					mostrarProducto(producto);
@@ -54,7 +62,7 @@ public class Modificar extends DialogoPadre {
 					JOptionPane.showMessageDialog(contentPanel,
 							e1.getMessage(), "Error",
 							JOptionPane.ERROR_MESSAGE);
-				}		
+				}
 			}
 		});
 		

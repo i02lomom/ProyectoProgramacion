@@ -37,6 +37,10 @@ public class Eliminar extends DialogoPadre {
 		nombre.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
+				buscarProducto(tienda);
+			}
+
+			private void buscarProducto(Tienda<Producto> tienda) {
 				try {
 					Producto producto=tienda.getProductoPorNombre(nombre.getText());
 					mostrarProducto(producto);

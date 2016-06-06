@@ -191,7 +191,7 @@ public abstract class Producto implements Serializable, Descuentable{
 	 * Estable la fecha de recepción (fecha actual)
 	 * @param fechaRecepcion del producto
 	 */
-	private void setFechaRecepcion(Fecha fechaRecepcion) {
+	public void setFechaRecepcion(Fecha fechaRecepcion) {
 		this.fechaRecepcion = fechaRecepcion;
 	}
 

@@ -9,6 +9,9 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
 import javax.swing.JOptionPane;
+
+import fecha.Fecha;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -39,6 +42,14 @@ public class AnadirUnidades extends DialogoPadre {
 		nombre.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
+				buscarProducto(tienda);		
+			}
+
+			/**
+			 * Busca y muestra el producto buscado por nombre
+			 * @param tienda ArraList de productos
+			 */
+			private void buscarProducto(Tienda<Producto> tienda) {
 				try {
 					producto = tienda.getProductoPorNombre(nombre.getText());
 					mostrarProducto(producto);
@@ -47,12 +58,20 @@ public class AnadirUnidades extends DialogoPadre {
 					JOptionPane.showMessageDialog(contentPanel,
 							e1.getMessage(), "Error",
 							JOptionPane.ERROR_MESSAGE);
-				}		
+				}
 			}
 		});
 		
 		enviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				anadirUnidades(tienda);
+			}
+
+			/**
+			 * Añade unidades de producto en caso de que el número de unidades sea válido
+			 * @param tienda ArrayList de productos
+			 */
+			private void anadirUnidades(Tienda<Producto> tienda) {
 				try {
 					int unidadesAAnadir=Integer.parseInt((String) JOptionPane.showInputDialog(
 						contentPanel,
@@ -67,6 +86,7 @@ public class AnadirUnidades extends DialogoPadre {
 					
 					else{
 						producto.setUnidades(Integer.parseInt(unidades.getText()) + unidadesAAnadir);
+						producto.setFechaRecepcion(new Fecha());
 						tienda.setModificado(true);
 						JOptionPane.showMessageDialog(contentPanel, "Unidades añadidas con éxito");
 						enviar.setEnabled(false);

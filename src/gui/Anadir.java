@@ -42,14 +42,17 @@ public class Anadir extends DialogoPadre {
 		identificador.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
+				comprobarSiExisteId(tienda);
+			}
+
+			private void comprobarSiExisteId(Tienda<Producto> tienda) {
 				try {
-					if(tienda.getAlmacen().contains(tienda.getProductoPorId(identificador.getText().toUpperCase()))){
-						identificador.setText("");
-						JOptionPane.showMessageDialog(contentPanel,
-								"Ya existe esa Id en la lista\n"
-								+ "Seleccione otra Id", "Error",
-								JOptionPane.ERROR_MESSAGE);
-					}
+					tienda.getProductoPorId(identificador.getText().toUpperCase().trim());
+					identificador.setText("");
+					JOptionPane.showMessageDialog(contentPanel,
+						"Ya existe esa Id en la lista\n"
+						+ "Seleccione otra Id", "Error",
+						JOptionPane.ERROR_MESSAGE);
 				} catch (ElementoNoExisteException e1) {
 				}
 			}
@@ -57,8 +60,13 @@ public class Anadir extends DialogoPadre {
 		
 		enviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				anadirProducto(tienda);
+			}
+
+			private void anadirProducto(Tienda<Producto> tienda) {
 				try{
-					if(getTipo()==TipoItem.COMPONENTE){
+					switch(getTipo()){
+					case COMPONENTE:
 						producto=new Componente(identificador.getText(),
 								nombre.getText(),
 								descripcion.getText(),
@@ -66,9 +74,8 @@ public class Anadir extends DialogoPadre {
 								Integer.parseInt(unidades.getText()),
 								(TipoComponente) comboBoxMarcaOComponente.getSelectedItem(),
 								fabricante.getText());
-						JOptionPane.showMessageDialog(contentPanel, "Componente añadido con éxito");
-					}
-					else if(getTipo()==TipoItem.MOVIL){
+						break;
+					case MOVIL:
 						producto=new Movil(identificador.getText(),
 								nombre.getText(),
 								descripcion.getText(),
@@ -80,9 +87,9 @@ public class Anadir extends DialogoPadre {
 								Integer.parseInt(camaraMovilOMemoriaTablet.getText()),
 								Integer.parseInt(memoriaOPantallaTablet.getText()),
 								procesador.getText());
-						JOptionPane.showMessageDialog(contentPanel, "Móvil añadido con éxito");
-					}
-					else if(getTipo()==TipoItem.TABLET){
+
+						break;
+					case TABLET:
 						producto=new Tablet(identificador.getText(),
 								nombre.getText(),
 								descripcion.getText(),
@@ -93,15 +100,16 @@ public class Anadir extends DialogoPadre {
 								procesadorTablet.getText(),
 								Integer.parseInt(camaraMovilOMemoriaTablet.getText()),
 								Integer.parseInt(memoriaOPantallaTablet.getText()));
-						JOptionPane.showMessageDialog(contentPanel, "Tablet añadida con éxito");
-					}
-					else{
+						break;
+					default:
 						JOptionPane.showMessageDialog(contentPanel,
-							"Debe seleccionar un producto.", "Error",
-							JOptionPane.ERROR_MESSAGE);
+								"Debe seleccionar un producto.", "Error",
+								JOptionPane.ERROR_MESSAGE);
 						return;
 					}
+					
 					tienda.anadirProducto(producto);
+					JOptionPane.showMessageDialog(contentPanel, "Producto añadido con éxito");
 					tienda.setModificado(true);
 					identificador.setForeground(Color.BLACK);
 					clear();
@@ -109,19 +117,14 @@ public class Anadir extends DialogoPadre {
 					JOptionPane.showMessageDialog(contentPanel,
 							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					identificador.setForeground(Color.RED);
-				} catch (NumeroUnidadesNoValidoException
-						| PrecioNoValidoException | ElementoYaExisteException |
-						NombreNoValidoException | DescripcionNoValidaException |
-						TipoDeComponenteNoValidoException | MarcaMovilNoValidaException | 
-						ModeloMovilNoValidoException | SistemaOperativoNoValidoException | 
-						MarcaTabletNoValidaException | ModeloTabletNoValidoException e1) {
-					JOptionPane.showMessageDialog(contentPanel,
-							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);	
 				} catch(NumberFormatException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
 							"Unidades, cámara o memoria deben de ser enteros\n"
 							+ "Precio y pantalla deben de ser decimales",
 							"Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(contentPanel,
+							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

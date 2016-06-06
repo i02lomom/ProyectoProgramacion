@@ -1,8 +1,6 @@
 package fecha;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -74,22 +72,6 @@ public class Fecha implements Serializable{
 	}
 	
 	/**
-	 * Suma a la fecha los días,meses y años dados
-	 * @param dias los días de la fecha
-	 * @param meses los meses de la fecha
-	 * @param annos los años de la fecha 
-	 * @throws SumaNoValidaException la suma no es válida
-	 */
-	public void sumar(int dias,int meses,int annos) throws SumaNoValidaException{
-		if(dias<0 || meses<0 || annos<0)
-			throw new SumaNoValidaException("Valores de suma no válidos.");
-		
-		calendar.add(GregorianCalendar.DAY_OF_MONTH, dias);
-		calendar.add(GregorianCalendar.MONTH, meses);
-		calendar.add(GregorianCalendar.YEAR, annos);	
-	}
-	
-	/**
 	 * Comprueba si la fecha dada a través de enteros (día, mes y año) es válida
 	 * @param dia de la fecha
 	 * @param mes de la fecha
@@ -122,65 +104,6 @@ public class Fecha implements Serializable{
 	}
 	
 	/**
-	 * Calcula la diferencia en días entre dos fechas
-	 * @param fecha de la que calcularemos los días
-	 * @return diferencia en días
-	 */
-	public long calcularDiasTranscurridos(Fecha fecha){
-		LocalDate fecha1=LocalDate.of(fecha.calendar.get(GregorianCalendar.YEAR),
-				fecha.calendar.get(GregorianCalendar.MONTH)+1,
-				fecha.calendar.get(GregorianCalendar.DAY_OF_MONTH));
-		
-		LocalDate fecha2=LocalDate.of(calendar.get(GregorianCalendar.YEAR),
-				calendar.get(GregorianCalendar.MONTH)+1,
-				calendar.get(GregorianCalendar.DAY_OF_MONTH));
-		
-		return Math.abs(ChronoUnit.DAYS.between(fecha1, fecha2));
-	}
-	
-	/**
-	 * Calcula la diferencia en años entre dos fechas 
-	 * @param fecha de la que calcularemos los años transcurridos
-	 * @return diferencia en años
-	 */
-	public long calcularAnnosTranscurridos(Fecha fecha){
-		LocalDate fecha1=LocalDate.of(fecha.calendar.get(GregorianCalendar.YEAR),
-				fecha.calendar.get(GregorianCalendar.MONTH)+1,
-				fecha.calendar.get(GregorianCalendar.DAY_OF_MONTH));
-		
-		LocalDate fecha2=LocalDate.of(calendar.get(GregorianCalendar.YEAR),
-				calendar.get(GregorianCalendar.MONTH)+1,
-				calendar.get(GregorianCalendar.DAY_OF_MONTH));
-		
-		return Math.abs(ChronoUnit.YEARS.between(fecha1, fecha2));
-	}
-	
-	/**
-	 * Comprueba si la fecha de nacimiento y nos indica si la persona es mayor de edad
-	 * @return true si tiene 18 o más y false si tiene menos
-	 */
-	public boolean esMayorDeEdad(){
-		LocalDate fecha=LocalDate.of(calendar.get(GregorianCalendar.YEAR),
-				calendar.get(GregorianCalendar.MONTH)+1,
-				calendar.get(GregorianCalendar.DAY_OF_MONTH));
-		
-		LocalDate fecha2 = LocalDate.now();
-		
-		if(ChronoUnit.YEARS.between(fecha,fecha2)<18)
-			return false;
-		return true;
-			
-	}
-	
-	/**
-	 * Comprueba si una fecha es posterior a la actual
-	 * @return true si la fecha es posterior y false si no.
-	 */
-	public boolean esFuturo(){
-		return calendar.after(GregorianCalendar.getInstance());
-	}
-	
-	/**
 	 * Devuelve el día de la semana de una fecha en castellano
 	 * @return cadena con el día de la semana
 	 */
@@ -194,20 +117,6 @@ public class Fecha implements Serializable{
 	 */
 	public String getMes(){
 		return calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, locale);
-	}
-	
-	/**
-	 * Obtiene la edad a partir de la fecha de nacimiento
-	 * @return edad obtenida a través de la fecha de nacimiento
-	 */
-	public int obtenerEdad(){
-		LocalDate fecha=LocalDate.of(calendar.get(GregorianCalendar.YEAR),
-				calendar.get(GregorianCalendar.MONTH)+1,
-				calendar.get(GregorianCalendar.DAY_OF_MONTH));
-		
-		LocalDate fecha2 = LocalDate.now();
-		
-		return (int)ChronoUnit.YEARS.between(fecha,fecha2);
 	}
 	
 	/**

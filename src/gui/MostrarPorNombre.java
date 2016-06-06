@@ -35,6 +35,14 @@ public class MostrarPorNombre extends DialogoPadre {
 		nombre.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
+				buscarProducto(tienda);
+			}
+
+			/**
+			 * Busca el producto a través del nombre
+			 * @param tienda ArrayList de productos
+			 */
+			private void buscarProducto(Tienda<Producto> tienda) {
 				try {
 					Producto producto=tienda.getProductoPorNombre(nombre.getText());
 					mostrarProducto(producto);

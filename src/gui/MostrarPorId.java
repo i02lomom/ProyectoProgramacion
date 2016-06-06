@@ -37,8 +37,16 @@ public class MostrarPorId extends DialogoPadre {
 		identificador.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
+				buscarProducto(tienda);
+			}
+
+			/**
+			 * Busca el producto a través del identificador
+			 * @param tienda ArrayList de productos
+			 */
+			private void buscarProducto(Tienda<Producto> tienda) {
 				try {
-					Producto producto=tienda.getProductoPorId(identificador.getText().toUpperCase());
+					Producto producto=tienda.getProductoPorId(identificador.getText().toUpperCase().trim());
 					mostrarProducto(producto);
 				} catch (ElementoNoExisteException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
