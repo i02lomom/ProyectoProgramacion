@@ -100,11 +100,8 @@ public class Anadir extends DialogoPadre {
 								procesadorTablet.getText(),
 								Integer.parseInt(camaraMovilOMemoriaTablet.getText()),
 								Integer.parseInt(memoriaOPantallaTablet.getText()));
-						break;
-					default:
-						JOptionPane.showMessageDialog(contentPanel,
-								"Debe seleccionar un producto.", "Error",
-								JOptionPane.ERROR_MESSAGE);
+						break;				
+					default:	
 						return;
 					}
 					
@@ -122,6 +119,10 @@ public class Anadir extends DialogoPadre {
 							"Unidades, cámara o memoria deben de ser enteros\n"
 							+ "Precio y pantalla deben de ser decimales",
 							"Error", JOptionPane.ERROR_MESSAGE);
+				} catch(NullPointerException e1) {
+					JOptionPane.showMessageDialog(contentPanel,
+							"Debe seleccionar un producto.", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(contentPanel,
 							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
