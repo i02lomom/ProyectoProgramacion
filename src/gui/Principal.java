@@ -33,7 +33,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * Clase principal. Desde este menú se podrá acceder a todas las opciones del programa
+ * Clase principal. Desde este menú se podrá acceder a todas las opciones del
+ * programa
  * 
  * @author Miguel Angel López Moyano
  * @version 1.0
@@ -43,7 +44,7 @@ public class Principal {
 	private File file;
 	private JFileChooser fileChooser = new JFileChooser();
 	private FileFilter filter = new FileNameExtensionFilter("Archivos de objeto (*.obj)", "obj");
-	private Tienda<Producto> tienda=new Tienda<Producto>();
+	private Tienda<Producto> tienda = new Tienda<Producto>();
 	private JFrame frame;
 	private Ayuda ayuda;
 	private Anadir anadir;
@@ -88,9 +89,7 @@ public class Principal {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
-				if(comprobarCambios())
-					return;
-				System.exit(0);
+				salir();
 			}
 		});
 		frame.setBounds(100, 100, 455, 344);
@@ -98,14 +97,14 @@ public class Principal {
 		actualizarTitulo("Tienda: Sin título");
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		fileChooser.setFileFilter(filter);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
-		
+
 		JMenu mnArchivo = new JMenu("Archivo");
 		mnArchivo.setMnemonic('A');
 		menuBar.add(mnArchivo);
-		
+
 		JMenuItem mntmNuevo = new JMenuItem("Nuevo");
 		mntmNuevo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -114,7 +113,7 @@ public class Principal {
 		});
 		mntmNuevo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
 		mnArchivo.add(mntmNuevo);
-		
+
 		JMenuItem mntmAbrir = new JMenuItem("Abrir...");
 		mntmAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -123,7 +122,7 @@ public class Principal {
 		});
 		mntmAbrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
 		mnArchivo.add(mntmAbrir);
-		
+
 		JMenuItem mntmGuardar = new JMenuItem("Guardar");
 		mntmGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -132,7 +131,7 @@ public class Principal {
 		});
 		mntmGuardar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, InputEvent.CTRL_MASK));
 		mnArchivo.add(mntmGuardar);
-		
+
 		JMenuItem mntmGuardarComo = new JMenuItem("Guardar como...");
 		mntmGuardarComo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -141,25 +140,23 @@ public class Principal {
 		});
 		mntmGuardarComo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, InputEvent.CTRL_MASK | InputEvent.ALT_MASK));
 		mnArchivo.add(mntmGuardarComo);
-		
+
 		JSeparator separator = new JSeparator();
 		mnArchivo.add(separator);
-		
+
 		JMenuItem mntmSalir = new JMenuItem("Salir");
 		mntmSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(tienda.estaModificado())
-					guardar();
-				System.exit(0);
+				salir();
 			}
 		});
 		mntmSalir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_MASK));
 		mnArchivo.add(mntmSalir);
-		
+
 		JMenu mnProductos = new JMenu("Productos");
 		mnProductos.setMnemonic('P');
 		menuBar.add(mnProductos);
-		
+
 		JMenuItem mntmAadirProducto = new JMenuItem("A\u00F1adir producto");
 		mntmAadirProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -168,7 +165,7 @@ public class Principal {
 		});
 		mntmAadirProducto.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
 		mnProductos.add(mntmAadirProducto);
-		
+
 		JMenuItem mntmEliminarProducto = new JMenuItem("Eliminar producto");
 		mntmEliminarProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -177,7 +174,7 @@ public class Principal {
 		});
 		mntmEliminarProducto.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
 		mnProductos.add(mntmEliminarProducto);
-		
+
 		JMenuItem mntmModificarProducto = new JMenuItem("Modificar producto");
 		mntmModificarProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -186,7 +183,7 @@ public class Principal {
 		});
 		mntmModificarProducto.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, InputEvent.CTRL_MASK));
 		mnProductos.add(mntmModificarProducto);
-		
+
 		JMenuItem mntmAadirUnidadesDe = new JMenuItem("A\u00F1adir unidades de producto");
 		mntmAadirUnidadesDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -195,10 +192,10 @@ public class Principal {
 		});
 		mntmAadirUnidadesDe.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, InputEvent.CTRL_MASK));
 		mnProductos.add(mntmAadirUnidadesDe);
-		
+
 		JMenu mnBuscar = new JMenu("Buscar");
 		mnProductos.add(mnBuscar);
-		
+
 		JMenuItem mntmPorId = new JMenuItem("Por ID...");
 		mntmPorId.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -207,7 +204,7 @@ public class Principal {
 		});
 		mntmPorId.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mnBuscar.add(mntmPorId);
-		
+
 		JMenuItem mntmPorNombre = new JMenuItem("Por nombre...");
 		mntmPorNombre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -216,11 +213,11 @@ public class Principal {
 		});
 		mntmPorNombre.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mnBuscar.add(mntmPorNombre);
-		
+
 		JMenu mnVentas = new JMenu("Ventas");
 		mnVentas.setMnemonic('V');
 		menuBar.add(mnVentas);
-		
+
 		JMenuItem mntmRealizarVenta = new JMenuItem("Realizar venta");
 		mntmRealizarVenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -229,20 +226,20 @@ public class Principal {
 		});
 		mntmRealizarVenta.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
 		mnVentas.add(mntmRealizarVenta);
-		
+
 		JMenu mnMostrar = new JMenu("Mostrar");
 		menuBar.add(mnMostrar);
-		
+
 		JMenuItem mntmMostrarComponentes = new JMenuItem("Mostrar componentes");
 		mntmMostrarComponentes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mostrarComponentes();
-				
+
 			}
 		});
 		mntmMostrarComponentes.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
 		mnMostrar.add(mntmMostrarComponentes);
-		
+
 		JMenuItem mntmMostrarTablets = new JMenuItem("Mostrar tablets");
 		mntmMostrarTablets.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -251,7 +248,7 @@ public class Principal {
 		});
 		mntmMostrarTablets.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_MASK));
 		mnMostrar.add(mntmMostrarTablets);
-		
+
 		JMenuItem mntmMostrarMviles = new JMenuItem("Mostrar m\u00F3viles");
 		mntmMostrarMviles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -260,10 +257,10 @@ public class Principal {
 		});
 		mntmMostrarMviles.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, InputEvent.CTRL_MASK));
 		mnMostrar.add(mntmMostrarMviles);
-		
+
 		JSeparator separator_1 = new JSeparator();
 		mnMostrar.add(separator_1);
-		
+
 		JMenuItem mntmMostrarProductos = new JMenuItem("Mostrar productos");
 		mntmMostrarProductos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -272,11 +269,11 @@ public class Principal {
 		});
 		mntmMostrarProductos.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
 		mnMostrar.add(mntmMostrarProductos);
-		
+
 		JMenu mnAyuda = new JMenu("Ayuda");
 		mnAyuda.setMnemonic('Y');
 		menuBar.add(mnAyuda);
-		
+
 		JMenuItem mntmVerAyuda = new JMenuItem("Ver ayuda");
 		mntmVerAyuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -286,7 +283,7 @@ public class Principal {
 		});
 		mntmVerAyuda.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, InputEvent.SHIFT_MASK));
 		mnAyuda.add(mntmVerAyuda);
-		
+
 		JMenuItem mntmAcercaDe = new JMenuItem("Acerca de...");
 		mntmAcercaDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -296,221 +293,221 @@ public class Principal {
 		mntmAcercaDe.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		mnAyuda.add(mntmAcercaDe);
 		frame.getContentPane().setLayout(null);
-		
+
 		JLabel lblImagen = new JLabel();
 		lblImagen.setIcon(new ImageIcon(Principal.class.getResource("/imagenes/Tienda.png")));
 		lblImagen.setBounds(0, 0, 449, 294);
 		frame.getContentPane().add(lblImagen);
 	}
-	
+
+	protected void salir() {
+		if (comprobarCambios())
+			return;
+		System.exit(0);
+	}
+
 	/**
 	 * Actualiza el título de la ventana
 	 * @param titulo que se le pondrá
 	 */
-	private void actualizarTitulo(String titulo){
+	private void actualizarTitulo(String titulo) {
 		frame.setTitle(titulo);
 	}
-	
+
 	/**
 	 * Crea una nueva ventana Anadir y la pone visible
 	 */
-	private void anadir(){
-		anadir=new Anadir(tienda);
+	private void anadir() {
+		anadir = new Anadir(tienda);
 		anadir.setVisible(true);
 	}
-	
+
 	/**
 	 * Crea una nueva ventana Eliminar y la pone visible
 	 */
-	private void eliminar(){
-		if(!tiendaVacia(tienda)){
-			eliminar=new Eliminar(tienda);
+	private void eliminar() {
+		if (!tiendaVacia(tienda)) {
+			eliminar = new Eliminar(tienda);
 			eliminar.setVisible(true);
 		}
 	}
-	
+
 	/**
 	 * Crea una nueva ventana Modificar y la pone visible
 	 */
-	private void modificar(){
-		if(!tiendaVacia(tienda)){
-			modificar=new Modificar(tienda);
+	private void modificar() {
+		if (!tiendaVacia(tienda)) {
+			modificar = new Modificar(tienda);
 			modificar.setVisible(true);
 		}
 	}
-	
+
 	/**
 	 * Crea una nueva ventana AnadirUnidades y lo pone visible
 	 */
-	private void anadirUnidades(){
-		if(!tiendaVacia(tienda)){
-			anadirUnidades=new AnadirUnidades(tienda);
+	private void anadirUnidades() {
+		if (!tiendaVacia(tienda)) {
+			anadirUnidades = new AnadirUnidades(tienda);
 			anadirUnidades.setVisible(true);
 		}
 	}
-	
+
 	/**
 	 * Crea una nueva ventana MostrarPorId y la pone visible
 	 */
-	private void mostrarPorId(){
-		if(!tiendaVacia(tienda)){
-			mostrarPorId=new MostrarPorId(tienda);
+	private void mostrarPorId() {
+		if (!tiendaVacia(tienda)) {
+			mostrarPorId = new MostrarPorId(tienda);
 			mostrarPorId.setVisible(true);
 		}
 	}
-	
+
 	/**
 	 * Crea una nueva ventana MostrarPorNombre y la pone visible
 	 */
-	private void mostrarPorNombre(){
-		if(!tiendaVacia(tienda)){
-			mostrarPorNombre=new MostrarPorNombre(tienda);
+	private void mostrarPorNombre() {
+		if (!tiendaVacia(tienda)) {
+			mostrarPorNombre = new MostrarPorNombre(tienda);
 			mostrarPorNombre.setVisible(true);
 		}
 	}
-	
+
 	/**
 	 * Crea una nueva ventana MostrarProductos y la pone visible
 	 */
-	private void mostrarProductos(){
-		if(!tiendaVacia(tienda)){
-			mostrarProductos=new MostrarProductos<Producto>(tienda);
+	private void mostrarProductos() {
+		if (!tiendaVacia(tienda)) {
+			mostrarProductos = new MostrarProductos<Producto>(tienda);
 			mostrarProductos.setVisible(true);
 		}
 	}
-	
+
 	/**
 	 * Crea una nueva ventana MostrarComponentes y la pone visible
 	 */
-	private void mostrarComponentes(){
-		if(!tiendaVacia(tienda)){
-			Tienda<Componente>tiendaAuxiliar=new Tienda<Componente>();
-			crearArrayComponentes(tienda,tiendaAuxiliar);	
-			if(!tiendaAuxiliar.getAlmacen().isEmpty()){
-				mostrarProductos=new MostrarProductos<Componente>(tiendaAuxiliar);
+	private void mostrarComponentes() {
+		if (!tiendaVacia(tienda)) {
+			Tienda<Componente> tiendaAuxiliar = new Tienda<Componente>();
+			crearArrayComponentes(tienda, tiendaAuxiliar);
+			if (!tiendaAuxiliar.getAlmacen().isEmpty()) {
+				mostrarProductos = new MostrarProductos<Componente>(tiendaAuxiliar);
 				mostrarProductos.setVisible(true);
-			}
-			else
-				JOptionPane.showMessageDialog(frame,
-						"No existe ningún componente en la lista", "Error",
+			} else
+				JOptionPane.showMessageDialog(frame, "No existe ningún componente en la lista", "Error",
 						JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	/**
 	 * Crea una nueva ventana MostrarTablets y la pone visible
 	 */
-	private void mostrarTablets(){
-		if(!tiendaVacia(tienda)){
-			Tienda<Tablet>tiendaAuxiliar=new Tienda<Tablet>();
-			crearArrayTablets(tienda,tiendaAuxiliar);
-			if(!tiendaAuxiliar.getAlmacen().isEmpty()){
-				mostrarProductos=new MostrarProductos<Tablet>(tiendaAuxiliar);
+	private void mostrarTablets() {
+		if (!tiendaVacia(tienda)) {
+			Tienda<Tablet> tiendaAuxiliar = new Tienda<Tablet>();
+			crearArrayTablets(tienda, tiendaAuxiliar);
+			if (!tiendaAuxiliar.getAlmacen().isEmpty()) {
+				mostrarProductos = new MostrarProductos<Tablet>(tiendaAuxiliar);
 				mostrarProductos.setVisible(true);
-			}
-			else
-				JOptionPane.showMessageDialog(frame,
-						"No existe ninguna tablet en la lista", "Error",
+			} else
+				JOptionPane.showMessageDialog(frame, "No existe ninguna tablet en la lista", "Error",
 						JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	/**
 	 * Crea una nueva ventana MostrarMoviles y la pone visible
 	 */
-	private void mostrarMoviles(){
-		if(!tiendaVacia(tienda)){
-			Tienda<Movil>tiendaAuxiliar=new Tienda<Movil>();
-			crearArrayMoviles(tienda,tiendaAuxiliar);
-			if(!tiendaAuxiliar.getAlmacen().isEmpty()){
-				mostrarProductos=new MostrarProductos<Movil>(tiendaAuxiliar);
+	private void mostrarMoviles() {
+		if (!tiendaVacia(tienda)) {
+			Tienda<Movil> tiendaAuxiliar = new Tienda<Movil>();
+			crearArrayMoviles(tienda, tiendaAuxiliar);
+			if (!tiendaAuxiliar.getAlmacen().isEmpty()) {
+				mostrarProductos = new MostrarProductos<Movil>(tiendaAuxiliar);
 				mostrarProductos.setVisible(true);
-			}
-			else
-				JOptionPane.showMessageDialog(frame,
-						"No existe ningún móvil en la lista", "Error",
+			} else
+				JOptionPane.showMessageDialog(frame, "No existe ningún móvil en la lista", "Error",
 						JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	/**
 	 * Crea una nueva ventana RealizarVenta y la pone visible
 	 */
-	private void realizarVenta(){
-		if(!tiendaVacia(tienda)){
-			realizarVenta=new RealizarVenta(tienda);
+	private void realizarVenta() {
+		if (!tiendaVacia(tienda)) {
+			realizarVenta = new RealizarVenta(tienda);
 			realizarVenta.setVisible(true);
 		}
 	}
-	
+
 	/**
 	 * Crea una nueva ventana AcercaDe y la pone visible
 	 */
-	private void acercaDe(){
-		acercaDe=new AcercaDe();
+	private void acercaDe() {
+		acercaDe = new AcercaDe();
 		acercaDe.setVisible(true);
 	}
-	
+
 	/**
-	 * Comprueba que la tienda no esté vacía, es decir que tenga al menos algún producto.
+	 * Comprueba que la tienda no esté vacía, es decir que tenga al menos algún
+	 * producto.
 	 * @param tienda ArrayList de productos
 	 * @return true si está vacía y false si no lo está
 	 */
-	private boolean tiendaVacia(Tienda<Producto> tienda){
-		if(tienda.getAlmacen().size()==0){
-			JOptionPane.showMessageDialog(frame,
-				"No existe ningún producto en la lista", "Error",
-				JOptionPane.ERROR_MESSAGE);
+	private boolean tiendaVacia(Tienda<Producto> tienda) {
+		if (tienda.getAlmacen().size() == 0) {
+			JOptionPane.showMessageDialog(frame, "No existe ningún producto en la lista", "Error",
+					JOptionPane.ERROR_MESSAGE);
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Crea un ArrayList donde se almacenarán solo los Componentes de tienda
 	 * @param tienda ArrayList de productos
 	 * @param tiendaAuxiliar ArrayList de Componentes
 	 */
-	private void crearArrayComponentes(Tienda<Producto> tienda,Tienda<Componente>tiendaAuxiliar){
-		for(Producto elemento:tienda.getAlmacen()){
-			if(elemento instanceof Componente)
+	private void crearArrayComponentes(Tienda<Producto> tienda, Tienda<Componente> tiendaAuxiliar) {
+		for (Producto elemento : tienda.getAlmacen()) {
+			if (elemento instanceof Componente)
 				try {
 					tiendaAuxiliar.anadirProducto((Componente) elemento);
 				} catch (ElementoYaExisteException e) {
 				}
 		}
 	}
-	
+
 	/**
-	 * Crea un ArrayList donde se almacenarán solo las Tablets de tienda
+	 * Crea un ArrayList donde se almacenarán solo los Moviles de tienda
 	 * @param tienda ArrayList de productos
 	 * @param tiendaAuxiliar ArrayList de Móviles
 	 */
-	private void crearArrayMoviles(Tienda<Producto> tienda,Tienda<Movil> tiendaAuxiliar){
-		for(Producto elemento:tienda.getAlmacen()){
-			if(elemento instanceof Movil)
+	private void crearArrayMoviles(Tienda<Producto> tienda, Tienda<Movil> tiendaAuxiliar) {
+		for (Producto elemento : tienda.getAlmacen()) {
+			if (elemento instanceof Movil)
 				try {
 					tiendaAuxiliar.anadirProducto((Movil) elemento);
 				} catch (ElementoYaExisteException e) {
 				}
 		}
 	}
-	
+
 	/**
 	 * Crea un ArrayList donde se almacenarán solo las Tablets de tienda
 	 * @param tienda ArrayList de productos
 	 * @param tiendaAuxiliar ArrayList de Tablets
 	 */
-	private void crearArrayTablets(Tienda<Producto> tienda,Tienda<Tablet> tiendaAuxiliar){
-		for(Producto elemento:tienda.getAlmacen()){
-			if(elemento instanceof Tablet)
+	private void crearArrayTablets(Tienda<Producto> tienda, Tienda<Tablet> tiendaAuxiliar) {
+		for (Producto elemento : tienda.getAlmacen()) {
+			if (elemento instanceof Tablet)
 				try {
 					tiendaAuxiliar.anadirProducto((Tablet) elemento);
 				} catch (ElementoYaExisteException e) {
 				}
 		}
 	}
-	
+
 	/**
 	 * Si se ha modificado la tienda pregunta al usuario si desea guardar los cambios
 	 * @return true si se guardan y false si no.
@@ -518,30 +515,31 @@ public class Principal {
 	private boolean comprobarCambios() {
 		if (tienda.estaModificado()) {
 			switch (JOptionPane.showOptionDialog(frame, "¿Desea guardar los cambios?", "Confirmar",
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null,
-					null)){	
+					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null)) {
 			case JOptionPane.YES_OPTION:
 				guardar();
 				tienda.setModificado(false);
-				return false;	
+				return false;
 			case JOptionPane.NO_OPTION:
-				return false;	
-			
-			default:				
+				return false;
+
+			default:
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	/**
-	 * Comprueba si se ha modificado la tienda, se guarda si así lo desea el usuario y crea una
-	 * nueva tienda (vacía)
+	 * Comprueba si se ha modificado la tienda, se guarda si así lo desea el
+	 * usuario y crea una nueva tienda (vacía)
 	 */
 	private void nuevo() {
-		comprobarCambios();
-		inicializar();  //Creamos una tienda nueva y ponemos modificado a false
-		file=null;	//Ponemos el file a null para indicar que el fichero es nuevo
+		if (comprobarCambios())
+			return;
+		inicializar(); // Creamos una tienda nueva y ponemos modificado a false
+		file = null; // Ponemos el file a null para indicar que el fichero es
+						// nuevo
 		actualizarTitulo("Tienda: Sin título");
 	}
 
@@ -552,27 +550,25 @@ public class Principal {
 		tienda.setModificado(false);
 		tienda = new Tienda<Producto>();
 	}
-	
+
 	/**
 	 * Abre el fichero seleccionado en el fileChooser
 	 */
 	private void abrirFichero() {
-		comprobarCambios();
+		if (comprobarCambios())
+			return;
 		returnVal = fileChooser.showOpenDialog(frame);
-		if (returnVal == JFileChooser.APPROVE_OPTION){
-			file=fileChooser.getSelectedFile();
-			if(file.exists()&&file!=null)
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			file = fileChooser.getSelectedFile();
+			if (file.exists() && file != null)
 				abrir(file);
 			else
-				JOptionPane.showMessageDialog(frame,
-					    "No existe el fichero",
-					    "Fichero no encontrado",
-					    JOptionPane.PLAIN_MESSAGE);
-		}
-		else if(returnVal == JFileChooser.CANCEL_OPTION)
+				JOptionPane.showMessageDialog(frame, "No existe el fichero", "Fichero no encontrado",
+						JOptionPane.PLAIN_MESSAGE);
+		} else if (returnVal == JFileChooser.CANCEL_OPTION)
 			return;
 	}
-	
+
 	/**
 	 * Nos permite leer una tienda guardada en un fichero.
 	 * @param file fichero
@@ -580,87 +576,68 @@ public class Principal {
 	public void abrir(File file) {
 		try {
 			tienda = Fichero.leerFichero(file);
-			JOptionPane.showMessageDialog(frame,
-			    "Fichero cargado con éxito",
-			    "Fichero cargado",
-			    JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(frame, "Fichero cargado con éxito", "Fichero cargado",
+					JOptionPane.PLAIN_MESSAGE);
 			tienda.setModificado(false);
-			actualizarTitulo("Tienda: "+file.getName());
+			actualizarTitulo("Tienda: " + file.getName());
 		} catch (ClassCastException e) {
-			JOptionPane.showMessageDialog(frame,
-				    "Tipo de fichero no válido",
-				    "Error",
-				    JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(frame, "Tipo de fichero no válido", "Error", JOptionPane.PLAIN_MESSAGE);
 		} catch (ClassNotFoundException e) {
-			JOptionPane.showMessageDialog(frame,
-			    "Información distinta a la esperada",
-			    "Error",
-			    JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(frame, "Información distinta a la esperada", "Error",
+					JOptionPane.PLAIN_MESSAGE);
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(frame,
-				"Error al leer el fichero",
-				"Error",
-				JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(frame, "Error al leer el fichero", "Error", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
-	
+
 	/**
-	 * Guarda en un fichero la tienda actual. Si ya se ha establecido un nombre de fichero
-	 * no se le pedirá al usuario. En caso contrario el usuario deberá dar un nombre al fichero
-	 * para guardarlo
+	 * Guarda en un fichero la tienda actual. Si ya se ha establecido un nombre
+	 * de fichero no se le pedirá al usuario. En caso contrario el usuario
+	 * deberá dar un nombre al fichero para guardarlo
 	 */
 	private void guardar() {
-		if(file==null)	//Si no hemos guardado previamente preguntamos el nombre del fichero
+		if (file == null) // Si no hemos guardado previamente preguntamos el
+							// nombre del fichero
 			guardarComo();
 		else {
 			try {
 				Fichero.escribirFichero(file, tienda);
 				tienda.setModificado(false);
-				JOptionPane.showMessageDialog(frame,
-					    "Fichero guardado con éxito",
-					    "Fichero guardado",
-					    JOptionPane.PLAIN_MESSAGE);
-				actualizarTitulo("Tienda: "+file.getName());
+				JOptionPane.showMessageDialog(frame, "Fichero guardado con éxito", "Fichero guardado",
+						JOptionPane.PLAIN_MESSAGE);
+				actualizarTitulo("Tienda: " + file.getName());
 			} catch (IOException e) {
-				JOptionPane.showMessageDialog(frame,
-					"Error al escribir en el fichero",
-					"Error",
-					JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(frame, "Error al escribir en el fichero", "Error",
+						JOptionPane.PLAIN_MESSAGE);
 			}
 		}
 	}
-	
+
 	/**
-	 * Guarda en un fichero la tienda actual. Obligatoriamente se le pedirá al usuario un nombre
-	 * de fichero para guardarlo.
+	 * Guarda en un fichero la tienda actual. Obligatoriamente se le pedirá al
+	 * usuario un nombre de fichero para guardarlo.
 	 */
 	private void guardarComo() {
 		try {
 			returnVal = fileChooser.showSaveDialog(frame);
 			if (returnVal == JFileChooser.APPROVE_OPTION)
-				file=fileChooser.getSelectedFile();
-			if(file!=null){
+				file = fileChooser.getSelectedFile();
+			if (file != null) {
 				if (Fichero.existe(file)) {
-					switch(JOptionPane.showOptionDialog(frame,
-						"¿Está seguro de que desea sobreescribirlo?", "Confirmar",
-						JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, null, null)){
-						case JOptionPane.NO_OPTION:
-							return;
+					switch (JOptionPane.showOptionDialog(frame, "¿Está seguro de que desea sobreescribirlo?",
+							"Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null)) {
+					case JOptionPane.NO_OPTION:
+						return;
 					}
 				}
 				Fichero.escribirFichero(file, tienda);
 				tienda.setModificado(false);
-				JOptionPane.showMessageDialog(frame,
-				    "Fichero guardado con éxito",
-				    "Fichero guardado",
-				    JOptionPane.PLAIN_MESSAGE);
-				actualizarTitulo("Tienda: "+file.getName());
+				JOptionPane.showMessageDialog(frame, "Fichero guardado con éxito", "Fichero guardado",
+						JOptionPane.PLAIN_MESSAGE);
+				actualizarTitulo("Tienda: " + file.getName());
 			}
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(frame,
-				"Error al escribir en el fichero",
-				"Error",
-				JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(frame, "Error al escribir en el fichero", "Error", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
 }
